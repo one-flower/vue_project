@@ -1,0 +1,49 @@
+@import './transtion.scss';
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-size: 14px;
+}
+
+:root {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+p {
+  margin: 0;
+}
+h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: normal;
+}
+h3,
+h4 {
+  margin: 0.5rem 0;
+  font-weight: normal;
+}
+.container {
+  padding: 15px;
+  height: calc(100% - 64px);
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.wid{
+  width: 100%;
+}
