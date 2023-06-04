@@ -10,7 +10,7 @@
       </div>
       <div class="login-container__body__form">
         <div class="title">登录</div>
-        <el-form :model="loginForm" ref="refLogin" :rules="rules" size="large">
+        <el-form :model="loginForm" ref="refLoginForm" :rules="rules" size="large">
           <el-form-item prop="username">
             <el-input v-model="loginForm.username" placeholder="请输入账号">
               <template #prefix>
@@ -30,7 +30,7 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="code">
-            <el-input v-model="loginForm.code" class="code">
+            <el-input v-model="loginForm.code" placeholder="请输入验证码" class="code">
               <template #prefix>
                 <svg-icon :width="25" :height="25" icon="vue"></svg-icon>
               </template>
@@ -38,7 +38,8 @@
             <img :src="imgBase" class="code-img" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="large" @click="loginSubmit()" class="wid">登录</el-button>
+            <el-button type="primary" size="large" @click="loginSubmit(refLoginForm)" :loading="loading"
+              class="wid">登录</el-button>
           </el-form-item>
         </el-form>
 
@@ -52,10 +53,13 @@
 </template>
 
 <script setup lang="ts">
-import { FormRules } from 'element-plus/es';
+import type { FormRules, FormInstance } from 'element-plus/es';
 import { isCode } from '@/utils/verify'
 import { loginCode } from '@/api/user';
-let loginForm = reactive({
+import { useUserStore } from '@/stores';
+import { toast } from '@/utils/tips';
+
+const loginForm = reactive({
   username: '',
   password: '',
   code: '',
@@ -72,18 +76,35 @@ const changePwd = () => {
   pwdType.value = pwdType.value === 'password' ? '' : 'password'
 }
 
+// 验证码
 const imgBase = ref('')
-
 onMounted(() => {
-  loginCode({}).then(res => {
-    console.log('---');
-    
+  loginCode().then(res => {
     imgBase.value = res.data
   })
 })
+// 登录
+const loading = ref(false)
+const store = useUserStore()
+const router = useRouter();
+const refLoginForm = ref();
+const loginSubmit = async (refLoginForm: FormInstance) => {
+  if (!refLoginForm) return
+  await refLoginForm.validate((valid, fields) => {
+    if (valid) {
+      loading.value = true
+      store.login(loginForm).then(res => {
+        toast('登录成功')
+        router.replace('/');
+      }).catch(err => {
+        toast('登录失败', 'error')
+      })
+      loading.value = false
 
-const loginSubmit = async () => {
-
+    } else {
+      toast('失败', 'error')
+    }
+  })
 }
 
 </script>

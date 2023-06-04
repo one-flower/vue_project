@@ -1,6 +1,6 @@
-import request from '@/request/index'
+import request from '@/utils/request'
 
-export function loginCode1() {
+export function loginCode() {
   return request({
     url: 'security/auth/image-captcha',
     method: 'get',
@@ -8,7 +8,7 @@ export function loginCode1() {
   })
 }
 
-export function loginCode(data: any) {
+export function login(data: any) {
   return request({
     url: '/api/getUserInfo',
     method: 'get',

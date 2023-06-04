@@ -18,9 +18,9 @@ const VALIDATION = {
 }
 
 function isCode(rule: any, value: any, callback: any) {
-  if (value === '') {
+  if (!value) {
     callback(new Error('请输入信息'))
-  } else if (value && VALIDATION.code_num.value.test(value)) {
+  } else if (value && !VALIDATION.code_num.value.test(value)) {
     callback(new Error(VALIDATION.code_num.label))
   } else {
     callback()

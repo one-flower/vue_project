@@ -4,8 +4,7 @@ import type {
   InternalAxiosRequestConfig,
   AxiosResponse,
 } from 'axios'
-
-const CancelToken = axios.CancelToken // 用于axios取消请求
+import { useUserStore } from '@/stores'
 
 const request: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
@@ -17,29 +16,54 @@ const request: AxiosInstance = axios.create({
     // 'token': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzgxMTIyMzM0NCIsImlhdCI6MTY4NTQyNzU1NSwiZXhwIjoxNjg1NDQ1NTU1fQ.hUf01DB6yeNhNTMaa3vZj0eCXN9vOGM3d5GsQQ_diiIBbBEUznWY5zDTE1a2MJnOE83uaWXylNZkSxZs6bWB6g'
   },
 })
+
+let pendingRequest = new Map()
+// 拼接接口信息
+function getRequestKey(config: InternalAxiosRequestConfig<any>) {
+  let { url, method, responseType, data } = config
+  return [url, method, responseType, JSON.stringify(data)].join('&')
+}
+// 添加
+function addPendingRequest(config: InternalAxiosRequestConfig) {
+  let requestKey = getRequestKey(config)
+  config.cancelToken =
+    config.cancelToken ||
+    new axios.CancelToken((cancel) => {
+      if (!pendingRequest.has(requestKey)) {
+        pendingRequest.set(requestKey, cancel)
+      }
+    })
+}
+// 移除
+function removePendingRequest(config: InternalAxiosRequestConfig) {
+  let requestKey = getRequestKey(config)
+  if (pendingRequest.has(requestKey)) {
+    // 如果是重复的请求，则执行对应的cancel函数
+    let cancel = pendingRequest.get(requestKey)
+    cancel(requestKey)
+    // 将前一次重复的请求移除
+    pendingRequest.delete(requestKey)
+    console.log('取消重复请求：' + requestKey)
+  }
+}
+
 // 请求拦截
 request.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    console.log(config, 'config')
-
-    //config 配置对象
-    // const store = useStore()
-    // const source = CancelToken.source()
-    // // const { cancel } = useStore()
-    const url = config.url
+    // 添加请求信息
+    const store = useUserStore()
+    if (store.token) {
+      config.headers.token = store.token
+    }
+    // get请求处理
     if (config.method?.toLocaleLowerCase() === 'get') {
       config.params = config.data
     }
-    // config.cancelToken = source.token
-    // if (store.user) {
-    //   config.headers.Authorization = `${store.user.token}`
-    // }
-    // // 当有重复请求的时候 则利用这个方式来取消重复的请求
-    // if (cancel[url]) {
-    //   delete cancel[url]
-    // }
-    // cancel[url] = source.cancel
-    // store.setCancel(cancel)
+    // 取消重复接口
+    // removePendingRequest(config)
+    // 添加非重复接口信息
+    // addPendingRequest(config)
+
     return config
   },
   (error) => {
@@ -52,9 +76,9 @@ request.interceptors.request.use(
 // 响应拦截
 request.interceptors.response.use(
   (response: AxiosResponse) => {
-    console.log(response, 'ssssss')
-
     const { status, data } = response
+    console.log(response,'response');
+    
     if (response.config.responseType === 'arraybuffer') {
       // 处理arraybuffer 为png图片
       const buffer: ArrayBuffer = data
@@ -69,13 +93,17 @@ request.interceptors.response.use(
             )
           ),
       })
-    } else {
+    } else if (status === 200) {
       return Promise.resolve(data)
+    } else {
+      return Promise.reject(data.message || 'Error')
     }
   },
   (error) => {
     console.log('err' + error) // for debug
-    return Promise.reject(error)
+    if (error) {
+      return Promise.reject({ data: '' })
+    }
   }
 )
 export default request
