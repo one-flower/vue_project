@@ -28,7 +28,7 @@
       <button type="button" @click="listLose1">直接赋值</button>
     </div>
     <div>
-      obj {{ obj1.age + 1 }} {{ obj1.num + 1 }}
+      <!-- obj {{ obj1.age + 1 }} {{ obj1.num + 1 }} -->
     </div>
   </div>
 </template>

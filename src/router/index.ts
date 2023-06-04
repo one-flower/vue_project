@@ -29,7 +29,7 @@ const routes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-  routes: routes.concat(basicRoute),
+  routes: routes,
   history: createWebHistory(import.meta.env.VITE_ROUTER_NAME),
 })
 

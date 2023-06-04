@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, watch, } from 'vue';
+import { useRouter } from 'vue-router'
 interface menuType {
   id: number,
   name: string,
@@ -28,7 +29,7 @@ const menuList: menuType[] = reactive([
   { id: 200, name: '2', level: 1 },
 ])
 
-import { useRouter } from 'vue-router'
+
 const router = useRouter()
 let checkPath = ref('')
 watch(() =>

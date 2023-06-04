@@ -75,7 +75,7 @@ const changePwd = () => {
 const imgBase = ref('')
 
 onMounted(() => {
-  loginCode().then(res => {
+  loginCode({}).then(res => {
     console.log('---');
     
     imgBase.value = res.data
