@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { login } from '@/api/user'
-// import { getToken, setToken, removeToken } from '/@/utils/auth'
 import router from '@/router'
 import { toast } from '@/utils/tips'
 
@@ -16,9 +15,10 @@ interface UserState {
   name: string
   headImg: string
   sex: number
+  menuList: number[]
 }
 
-export const useUserStore = defineStore({
+export const UserStore = defineStore({
   id: 'user',
   state: (): UserState => ({
     token: '',
@@ -26,6 +26,7 @@ export const useUserStore = defineStore({
     name: '',
     headImg: '',
     sex: 0,
+    menuList: [],
   }),
   getters: {
     getToken(): string {
@@ -48,6 +49,9 @@ export const useUserStore = defineStore({
     setSex(sex: number) {
       this.sex = sex
     },
+    setMenuList(menuList: number[]) {
+      this.menuList = menuList
+    },
     resetState() {
       this.token = ''
     },
@@ -64,6 +68,7 @@ export const useUserStore = defineStore({
             this.setName(data.name)
             this.setHeadImg(data.headImg)
             this.setSex(data.sex)
+            this.setMenuList(data.menuList)
             resolve(true)
           })
           .catch((err) => {
@@ -90,7 +95,7 @@ export const useUserStore = defineStore({
     strategies: [
       {
         storage: sessionStorage,
-        paths: ['token', 'account', 'name', 'headImg', 'sex'],
+        paths: ['token', 'account', 'name', 'headImg', 'sex', 'menuList'],
       },
     ],
   },

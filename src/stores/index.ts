@@ -6,4 +6,5 @@ pinia.use(piniaPersist)
 
 export default pinia
 
-export * from './modules/user'
+export { UserStore } from './modules/user'
+export { LayoutStore } from './modules/layout'

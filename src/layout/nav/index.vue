@@ -1,6 +1,7 @@
 <template>
   <div class="nav">
-    
+    <div class=""></div>
+    <div class=""></div>
   </div>
 </template>
 
@@ -10,7 +11,6 @@
 
 <style lang="scss" scoped>
 .nav {
-  text-align: center;
-  border: 1px solid #9d9292;
+  overflow: hidden;
 }
 </style>

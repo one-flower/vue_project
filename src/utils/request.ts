@@ -4,7 +4,7 @@ import type {
   InternalAxiosRequestConfig,
   AxiosResponse,
 } from 'axios'
-import { useUserStore } from '@/stores'
+import { UserStore } from '@/stores'
 
 const request: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
@@ -51,7 +51,7 @@ function removePendingRequest(config: InternalAxiosRequestConfig) {
 request.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // 添加请求信息
-    const store = useUserStore()
+    const store = UserStore()
     if (store.token) {
       config.headers.token = store.token
     }
@@ -60,9 +60,9 @@ request.interceptors.request.use(
       config.params = config.data
     }
     // 取消重复接口
-    // removePendingRequest(config)
+    removePendingRequest(config)
     // 添加非重复接口信息
-    // addPendingRequest(config)
+    addPendingRequest(config)
 
     return config
   },
@@ -76,7 +76,7 @@ request.interceptors.request.use(
 // 响应拦截
 request.interceptors.response.use(
   (response: AxiosResponse) => {
-    const { status, data } = response
+    const { data } = response
     console.log(response,'response');
     
     if (response.config.responseType === 'arraybuffer') {
@@ -93,10 +93,10 @@ request.interceptors.response.use(
             )
           ),
       })
-    } else if (status === 200) {
+    } else if (data.code === 200) {
       return Promise.resolve(data)
     } else {
-      return Promise.reject(data.message || 'Error')
+      return Promise.reject(data || { data: '' })
     }
   },
   (error) => {
