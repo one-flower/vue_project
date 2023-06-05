@@ -27,7 +27,8 @@ const props = defineProps({
   // SVG 图标名称或在线URL
   icon: {
     type: String,
-    required: true
+    default: 'vue'
+    // required: true
   },
   // 图标类名
   className: {
