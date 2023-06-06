@@ -36,6 +36,7 @@ const router = createRouter({
   routes: routes.concat(menuRouter),
   history: createWebHistory(import.meta.env.VITE_ROUTER_NAME),
 })
+console.log(routes.concat(menuRouter),'========');
 
 // 全局前置导航守卫
 router.beforeEach((to, from, next) => {
@@ -54,8 +55,6 @@ router.beforeEach((to, from, next) => {
       const getRoute = (menu: RouteRecordRaw[]) => {
         menu.forEach((item, index) => {
           // 除去没有的
-          console.log(menuIds,item.menuId,menuIds.includes(item.menuId));
-          
           if (!menuIds.includes(item.menuId)) {
             menu.splice(index, 1)
           } else {

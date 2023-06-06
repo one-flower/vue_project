@@ -1,12 +1,11 @@
 <template>
   <div class="login-container">
-    <!-- <img src="@assets/login_images/login_bg.png"/> -->
     <div class="login-container__header">
-      <img src="@assets/login_images/logoTop.png" />
+      <!-- <img src="@assets/login_images/logoTop.png" /> -->
     </div>
     <div class="login-container__body">
       <div class="login-container__body__img">
-        <img src="@assets/login_images/login.png" />
+        <!-- <img src="@assets/login_images/login.jpg" /> -->
       </div>
       <div class="login-container__body__form">
         <div class="title">登录</div>
@@ -14,14 +13,14 @@
           <el-form-item prop="username">
             <el-input v-model="loginForm.username" placeholder="请输入账号">
               <template #prefix>
-                <svg-icon :size="25" icon="vue"></svg-icon>
+                <svg-icon :size="25" icon="user"></svg-icon>
               </template>
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input v-model="loginForm.password" placeholder="请输入密码" :type="pwdType">
               <template #prefix>
-                <svg-icon :size="25" icon="vue"></svg-icon>
+                <svg-icon :size="25" icon="pwd"></svg-icon>
               </template>
               <template #suffix>
                 <svg-icon :size="25" :icon="pwdType === 'password' ? 'show' : 'hide'" @click="changePwd"
@@ -32,7 +31,7 @@
           <el-form-item prop="code">
             <el-input v-model="loginForm.code" placeholder="请输入验证码" class="code">
               <template #prefix>
-                <svg-icon :size="25" icon="vue"></svg-icon>
+                <svg-icon :size="25" icon="captcha"></svg-icon>
               </template>
             </el-input>
             <img :src="imgBase" class="code-img" />
@@ -47,7 +46,7 @@
       </div>
     </div>
     <div class="login-container__footer">
-      <p>Copyright @ 2018-2021 观安观鼎在线培训平台 All Rights Reserved.</p>
+      <p>中国-杭州  2023-06-01  开始划水.</p>
     </div>
   </div>
 </template>
@@ -80,6 +79,8 @@ const changePwd = () => {
 const imgBase = ref('')
 onMounted(() => {
   loginCode().then(res => {
+    console.log(res);
+    
     imgBase.value = res.data
   })
 })

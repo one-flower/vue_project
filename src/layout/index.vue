@@ -1,11 +1,13 @@
 <template>
-  <Aside-item class="layout__aside" :style="'width'" />
-  <main class="layout__main">
-    <Nav-item class="layout__main__nav" />
-    <Artive-item class="layout__main__article" />
-  </main>
+  <div>
+    <Aside-item class="layout__aside" :style="'width'" />
+    <main class="layout__main">
+      <Nav-item class="layout__main__nav" />
+      <Artive-item class="layout__main__article" />
+    </main>
 
-  <el-backtop :right="100" :bottom="100" />
+    <el-backtop :right="100" :bottom="100" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -38,7 +40,7 @@ $asideWidth: 200px;
 
     &__nav {
       width: calc(100% - $asideWidth);
-      height: 70px;  // 48 + 32
+      height: 70px; // 48 + 32
       position: fixed;
       background-color: #fff;
     }
@@ -49,4 +51,5 @@ $asideWidth: 200px;
       overflow: hidden;
     }
   }
-}</style>
+}
+</style>

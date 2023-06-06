@@ -29,9 +29,9 @@ import request from '@/utils/request'
 
 export function loginCode() {
   return request({
-    url: 'security/auth/image-captcha',
+    url: 'api/image-captcha',
     method: 'get',
-    responseType: 'arraybuffer',
+    // responseType: 'arraybuffer',
   })
 }
 
