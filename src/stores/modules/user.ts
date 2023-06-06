@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { login } from '@/api/user'
 import router from '@/router'
 import { toast } from '@/utils/tips'
+import type { RouteRecordRaw } from 'vue-router'
 
 interface loginForm {
   username: string
@@ -15,7 +16,8 @@ interface UserState {
   name: string
   headImg: string
   sex: number
-  menuList: number[]
+  menuIds: number[]
+  menuList: RouteRecordRaw[]
 }
 
 export const UserStore = defineStore({
@@ -26,6 +28,7 @@ export const UserStore = defineStore({
     name: '',
     headImg: '',
     sex: 0,
+    menuIds: [],
     menuList: [],
   }),
   getters: {
@@ -49,7 +52,10 @@ export const UserStore = defineStore({
     setSex(sex: number) {
       this.sex = sex
     },
-    setMenuList(menuList: number[]) {
+    setMenuIds(menuIds: number[]) {
+      this.menuIds = menuIds
+    },
+    setMenuList(menuList: RouteRecordRaw[]) {
       this.menuList = menuList
     },
     resetState() {
@@ -68,7 +74,7 @@ export const UserStore = defineStore({
             this.setName(data.name)
             this.setHeadImg(data.headImg)
             this.setSex(data.sex)
-            this.setMenuList(data.menuList)
+            this.setMenuIds(data.menuIds)
             resolve(true)
           })
           .catch((err) => {
@@ -95,7 +101,7 @@ export const UserStore = defineStore({
     strategies: [
       {
         storage: sessionStorage,
-        paths: ['token', 'account', 'name', 'headImg', 'sex', 'menuList'],
+        paths: ['token', 'account', 'name', 'headImg', 'sex', 'menuIds'],
       },
     ],
   },

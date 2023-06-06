@@ -8,6 +8,6 @@ import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
 import 'virtual:svg-icons-register' //svg
 
-const app = createApp(App).use(pinia)
+const app = createApp(App)
 
-app.use(router).mount('#app')
+app.use(router).use(pinia).mount('#app')

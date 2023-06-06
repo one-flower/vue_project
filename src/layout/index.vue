@@ -4,20 +4,19 @@
     <Nav-item class="layout__main__nav" />
     <Artive-item class="layout__main__article" />
   </main>
+
+  <el-backtop :right="100" :bottom="100" />
 </template>
 
 <script setup lang="ts">
 import NavItem from './nav/index.vue'
 import AsideItem from './aside/index.vue'
 import ArtiveItem from './article/index.vue'
-
-// import { UserStore } from '@/stores';
-// const store = UserStore()
-// const asideWidth = store.asideWidth
 </script>
 
 <style lang="scss" scoped>
 $asideWidth: 200px;
+
 .layout {
   width: 100%;
   height: 100%;
@@ -29,23 +28,25 @@ $asideWidth: 200px;
     top: 0px;
     bottom: 0px;
   }
+
   &__main {
+    position: relative;
     width: calc(100% - $asideWidth);
     height: 100%;
     margin-left: $asideWidth;
     background-color: #f0f2f5;
+
     &__nav {
-      width: 100%;
-      height: 64px;
+      width: calc(100% - $asideWidth);
+      height: 70px;  // 48 + 32
       position: fixed;
+      background-color: #fff;
     }
 
     &__article {
       height: 100%;
       padding-top: 64px;
-      padding-left: $asideWidth;
       overflow: hidden;
     }
   }
-}
-</style>
+}</style>

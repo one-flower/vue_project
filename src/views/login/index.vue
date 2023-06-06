@@ -14,17 +14,17 @@
           <el-form-item prop="username">
             <el-input v-model="loginForm.username" placeholder="请输入账号">
               <template #prefix>
-                <svg-icon :width="25" :height="25" icon="vue"></svg-icon>
+                <svg-icon :size="25" icon="vue"></svg-icon>
               </template>
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input v-model="loginForm.password" placeholder="请输入密码" :type="pwdType">
               <template #prefix>
-                <svg-icon :width="25" :height="25" icon="vue"></svg-icon>
+                <svg-icon :size="25" icon="vue"></svg-icon>
               </template>
               <template #suffix>
-                <svg-icon :width="25" :height="25" :icon="pwdType === 'password' ? 'show' : 'hide'" @click="changePwd"
+                <svg-icon :size="25" :icon="pwdType === 'password' ? 'show' : 'hide'" @click="changePwd"
                   style="cursor: pointer;"></svg-icon>
               </template>
             </el-input>
@@ -32,7 +32,7 @@
           <el-form-item prop="code">
             <el-input v-model="loginForm.code" placeholder="请输入验证码" class="code">
               <template #prefix>
-                <svg-icon :width="25" :height="25" icon="vue"></svg-icon>
+                <svg-icon :size="25" icon="vue"></svg-icon>
               </template>
             </el-input>
             <img :src="imgBase" class="code-img" />

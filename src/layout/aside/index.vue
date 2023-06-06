@@ -1,16 +1,16 @@
 <template>
   <div class="aside-container">
     <div class="aside-container__title">
-      <svg-icon icon="poke" class="aside-container__title__icon" />
-      <div class="aside-container__title__info">精灵球</div>
+      <svg-icon icon="poke" class="aside-container__title--icon" />
+      <div class="aside-container__title--info">精灵球</div>
     </div>
     <div class="aside-container__menu">
-      <el-menu router unique-opened @open="handleOpen" @close="handleClose" background-color="#001529"
-        text-color="#f4f7f9" active-text-color="#6599ff">
-        <el-sub-menu :index="item.path" v-for="item in router" :key="item.menuId" v-show="!item.meta?.sys">
+      <el-menu router unique-opened background-color="#001529" text-color="#f4f7f9" active-text-color="#6599ff"
+        size="large">
+        <el-sub-menu :index="item.path" v-for="item in menuList" :key="item.menuId">
           <template #title>
             <el-icon>
-              <svg-icon :icon="(item.meta?.icon as string)" />
+              <svg-icon :size="18" :icon="(item.meta?.icon as string)" />
             </el-icon>
             <span>{{ item.meta?.title }}</span>
           </template>
@@ -24,15 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import route from '@/router'
-const router = route.options.routes
-
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
+import { UserStore } from '@/stores'
+const { menuList } = UserStore()
 </script>
 
 <style lang="scss" scoped>
@@ -46,9 +39,11 @@ $bgColor: #001529;
   &__title {
     width: 100%;
     height: 48px;
+    padding: 0 15px;
     color: #fff;
+    box-sizing: border-box;
 
-    &__icon {
+    &--icon {
       padding: 8px;
       height: 32px;
       width: 32px;
@@ -57,7 +52,7 @@ $bgColor: #001529;
       animation: amplifyIcon .8s ease-in-out;
     }
 
-    &__info {
+    &--info {
       width: 120px;
       height: 40px;
       line-height: 40px;
@@ -79,6 +74,15 @@ $bgColor: #001529;
       border-right: none !important;
       background: $bgColor;
       color: #fff !important;
+
+      // .el-sub-menu__title,
+      // .el-menu-item {
+      //   font-size: 16px;
+      // }
+
+      // .el-sub-menu .el-icon {
+      //   font-size: 20px;
+      // }
     }
   }
 }
@@ -98,9 +102,10 @@ $bgColor: #001529;
 }
 
 @keyframes rotateTitle {
-  from{
+  from {
     transform: scale(0) rotate(0deg)
   }
+
   to {
     transform: scale(1) rotate(360deg)
   }
