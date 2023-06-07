@@ -62,11 +62,10 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
+      store.setNavList(to)
       // 菜单权限
       const getRoute = (menu: RouteRecordRaw[]) => {
         menu.forEach((item, index) => {
-          console.log(item,'sss');
-          
           // 除去没有的
           if (!menuIds.includes(item.menuId)) {
             menu.splice(index, 1)
