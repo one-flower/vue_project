@@ -3,7 +3,7 @@ import Layout from '@/layout/index.vue'
 
 const menuRouter: RouteRecordRaw[] = [
   {
-    path: '/index',
+    path: '/name',
     menuId: 100,
     meta: {
       title: '我是首页',
@@ -17,60 +17,51 @@ const menuRouter: RouteRecordRaw[] = [
         meta: {
           title: '我是首页1',
         },
-        component: () => import('@/views/basic/basicInfo.vue'),
         children: [
-          {
-            path: 'basicInfo',
-            menuId: 101,
-            meta: {
-              title: '我是首页1-1-1',
-            },
-            component: () => import('@/views/basic/basicInfo.vue'),
-          },
           {
             path: 'computed',
             menuId: 101,
             meta: {
-              title: '我是首页2-2-2',
+              title: '首页2',
             },
             component: () => import('@/views/basic/computed.vue'),
           },
         ],
       },
       {
-        path: 'computed',
+        path: 'ccc',
         menuId: 101,
         meta: {
           title: '首页2',
         },
-        component: () => import('@/views/basic/computed.vue'),
+        component: () => import('@/views/basic/basicInfo.vue'),
       },
     ],
   },
   {
-    path: '/xxx',
+    path: '/page',
     menuId: 100,
     meta: {
-      title: '首页',
+      title: 'page',
       icon: 'win',
     },
     component: Layout,
     children: [
       {
-        path: '111',
+        path: 'page1',
         menuId: 101,
         meta: {
-          title: '首页1',
+          title: 'page1',
         },
-        component: () => import('@/views/basic/basicInfo.vue'),
+        component: () => import('@/views/page1.vue'),
       },
       {
-        path: 'computed',
+        path: 'page2',
         menuId: 101,
         meta: {
-          title: '首页2',
+          title: 'page2',
         },
-        component: () => import('@/views/basic/computed.vue'),
+        component: () => import('@/views/page2.vue'),
       },
     ],
   },

@@ -1,17 +1,20 @@
 <template>
   <div>
     <div class="nav__header">
-      <!-- silder控制 -->
+      <!-- aside控制 -->
       <div @click="changeSider" class="nav__header__sign">
-        <svg-icon :icon="siderStatus ? 'indent' : 'outdent'" :size="20"></svg-icon>
+        <svg-icon :icon="asideStatus ? 'indent' : 'outdent'" :size="20"></svg-icon>
       </div>
       <!-- 面包屑 -->
       <div class="nav__header__breadcrumb">
-        <transition-group name='breadcrumb'>
-          <el-breadcrumb separator="/" size="large">
-            <el-breadcrumb-item v-for="item in  route.matched" :to="item.path">{{ item.meta.title }}</el-breadcrumb-item>
-          </el-breadcrumb>
-        </transition-group>
+        <el-breadcrumb separator="/" size="large">
+          <transition-group name='breadcrumb'>
+            <el-breadcrumb-item key='/' to="/">主页</el-breadcrumb-item>
+            <el-breadcrumb-item v-for="item in route.matched" :key='item.path' :to="item.path">
+              {{ item.meta.title }}
+            </el-breadcrumb-item>
+          </transition-group>
+        </el-breadcrumb>
       </div>
       <!-- 功能按钮 -->
       <div class="nav__header__icons">
@@ -48,22 +51,23 @@
 import { UserStore } from '@/stores'
 import { useRoute } from 'vue-router';
 const route = useRoute()
-watch(() => route.path, () => {
-})
+const store = UserStore()
 
-let siderStatus = ref(true)
+// 控制aside
+let asideStatus = ref(true)
 const changeSider = () => {
-  siderStatus.value = !siderStatus.value
+  asideStatus.value = !asideStatus.value
 }
-
+// 页面刷新
 const reload = () => {
   window.location.reload();
 }
+console.log(route.matched);
 
-const store = UserStore()
-
+// 登出
 const loginOut = () => {
-  store.logout().then(res => {
+  store.logout(
+  ).then(res => {
   }).catch(err => {
   })
 }

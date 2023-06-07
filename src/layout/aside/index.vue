@@ -6,7 +6,7 @@
     </div>
     <div class="aside-container__menu">
       <el-menu router unique-opened background-color="#001529" text-color="#f4f7f9" active-text-color="#6599ff"
-        size="large" :collapse="false">
+        size="large" :collapse="false" :default-active="route.path">
         <el-sub-menu :index="item.path" v-for="item in menuList" :key="item.menuId">
           <template #title>
             <el-icon>
@@ -26,6 +26,9 @@
 import MenuItem from './menu-item.vue';
 import { UserStore } from '@/stores'
 const { menuList } = UserStore()
+
+import { useRoute } from 'vue-router';
+const route = useRoute()
 </script>
 
 <style lang="scss" scoped>

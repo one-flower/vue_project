@@ -13,11 +13,24 @@ const routes: RouteRecordRaw[] = [
     menuId: 1,
     meta: {
       title: '登录',
-      sys: true, // 自带菜单
-      hidden: true,
       icon: 'vue',
     },
     component: () => import('@/views/login/index.vue'),
+  },
+  {
+    path: '/',
+    menuId: 2,
+    component: () => import('@/layout/index.vue'),
+    children: [
+      {
+        path: 'home',
+        menuId: 3,
+        meta: {
+          title: '首页2',
+        },
+        component: () => import('@/views/home.vue'),
+      },
+    ],
   },
   {
     path: '/:catchAll(.*)',
@@ -25,8 +38,6 @@ const routes: RouteRecordRaw[] = [
     menuId: 2,
     meta: {
       title: '404',
-      sys: true,
-      hidden: true,
     },
     component: () => import('@/views/404.vue'),
   },
@@ -36,7 +47,6 @@ const router = createRouter({
   routes: routes.concat(menuRouter),
   history: createWebHistory(import.meta.env.VITE_ROUTER_NAME),
 })
-console.log(routes.concat(menuRouter),'========');
 
 // 全局前置导航守卫
 router.beforeEach((to, from, next) => {
@@ -48,12 +58,15 @@ router.beforeEach((to, from, next) => {
   // 无token且不属于白名单。 返回login页面
   if (token) {
     //登录
+
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
       // 菜单权限
       const getRoute = (menu: RouteRecordRaw[]) => {
         menu.forEach((item, index) => {
+          console.log(item,'sss');
+          
           // 除去没有的
           if (!menuIds.includes(item.menuId)) {
             menu.splice(index, 1)

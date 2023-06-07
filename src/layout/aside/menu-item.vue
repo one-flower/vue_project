@@ -5,11 +5,12 @@
       <menu-item :basePath="resolvePath(item.path)" :menuItemList="item.children">
       </menu-item>
     </el-sub-menu>
-    <el-menu-item :index="item.path" :route="resolvePath(item.path)" v-else>
+    <el-menu-item :index="resolvePath(item.path)" :route="resolvePath(item.path)" v-else>
       <span style="margin-left: 10px;">{{ item.meta?.title }}</span>
     </el-menu-item>
   </template>
 </template>
+
 <script setup lang="ts">
 import { PropType } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
@@ -27,22 +28,18 @@ const props = defineProps({
     }
   }
 })
-
-const isExternal = (path: string) => {
-  return /^(https?:|mailto:|tel:)/.test(path)
-}
+// 路径补全
 const resolvePath = (routePath = '') => {
-  if (isExternal(routePath)) {
+  const isExternal = /^(https?:|mailto:|tel:)/
+  if (isExternal.test(routePath)) {
     return routePath
   }
   return props.basePath + '/' + routePath
 }
 </script>
+
 <style scoped lang="scss">
-:deep(.el-sub-menu__title){
+:deep(.el-sub-menu__title) {
   margin-left: 10px;
-  overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
 }
 </style>
