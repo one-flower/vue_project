@@ -1,12 +1,12 @@
 <template>
   <template v-for="item in menuItemList" :key="item.menuId">
-    <el-sub-menu :index="resolvePath(item.path)" v-if="item.children">
+    <el-sub-menu :index="resolvePath(item.path)" v-if="item.children" teleported>
       <template #title>{{ item.meta?.title }}</template>
       <menu-item :basePath="resolvePath(item.path)" :menuItemList="item.children">
       </menu-item>
     </el-sub-menu>
     <el-menu-item :index="resolvePath(item.path)" :route="resolvePath(item.path)" v-else>
-      <span style="margin-left: 10px;">{{ item.meta?.title }}</span>
+      <span style="padding-left: 10px;">{{ item.meta?.title }}</span>
     </el-menu-item>
   </template>
 </template>
@@ -39,7 +39,5 @@ const resolvePath = (routePath = '') => {
 </script>
 
 <style scoped lang="scss">
-:deep(.el-sub-menu__title) {
-  margin-left: 10px;
-}
+
 </style>

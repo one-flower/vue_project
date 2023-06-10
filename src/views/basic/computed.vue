@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <el-input v-model.number="num" placeholder=""  clearable ></el-input>
+    
     <div>
       <input type="number" v-model="num" />
       computed: {{ numChange }}

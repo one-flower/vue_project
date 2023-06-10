@@ -1,12 +1,13 @@
 <template>
-  <el-config-provider :size="size" :z-index="zIndex">
+  <el-config-provider :size="LayoutStore.elSize" :z-index="zIndex">
     <router-view />
   </el-config-provider>
 </template>
 
 
 <script lang="ts" setup>
-const size: "" | "large" | "default" | "small" = 'default'
+import appStore from '@/stores'
+const { LayoutStore } = appStore()
 const zIndex = 3000
 
 // 切换head信息
@@ -25,7 +26,7 @@ const changeHead = () => {
     document.title = titleName.value;
     changeIcon('/default.svg')
   }
-  
+
 }
 window.addEventListener("visibilitychange", changeHead, false);
 // 注销事件

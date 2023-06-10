@@ -8,7 +8,7 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import { viteMockServe } from "vite-plugin-mock";
-
+// import { visualizer } from "rollup-plugin-visualizer"; //build文件分析视图
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -25,6 +25,31 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     build: {
       target: "esnext", //浏览器兼容
       assetsInlineLimit: 10240, //10k文件转base64
+      outDir: "dist",
+      minify: "terser", //压缩方式
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
+      rollupOptions: {
+        //文件分包
+        output: {
+          chunkFileNames: "static/js/[name]-[hash].js",
+          entryFileNames: "static/js/[name]-[hash].js",
+          assetFileNames: "static/[ext]/[name]-[hash].[ext]",
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              return id
+                .toString()
+                .split("node_modules/")[1]
+                .split("/")[0]
+                .toString();
+            }
+          },
+        },
+      },
     },
     server: {
       port: 9789,
@@ -43,6 +68,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     },
     base: env.VITE_ROUTER_NAME,
     plugins: [
+      // visualizer({ open: true }), // 自动开启分析页面
       vue({
         // 默认开启响应性语法糖
         reactivityTransform: true,
@@ -106,5 +132,15 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         prodEnabled: false, // 是否开启生产环境
       }),
     ],
+    css: {
+      // css预处理器
+      preprocessorOptions: {
+        scss: {
+          // 引入 mixin.scss 这样就可以在全局中使用 mixin.scss中预定义的变量了
+          // 给导入的路径最后加上 ;
+          additionalData: '@import "@/styles/variables.scss";',
+        },
+      },
+    },
   };
 });

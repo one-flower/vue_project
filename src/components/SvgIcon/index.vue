@@ -47,6 +47,7 @@ const isOnlineSvg = computed(() => /^(https?:)/.test(props.icon))
   height: var(--size);
   fill: currentColor;
   overflow: hidden;
+  vertical-align: middle;
 }
 
 .svg-icon-online {

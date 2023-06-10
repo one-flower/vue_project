@@ -3,7 +3,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
-import { UserStore } from '@/stores'
+import appStore from '@/stores'
 import menuRouter from './menu'
 
 const routes: RouteRecordRaw[] = [
@@ -51,8 +51,8 @@ const router = createRouter({
 // 全局前置导航守卫
 router.beforeEach((to, from, next) => {
   NProgress.start()
-  const store = UserStore()
-  const { token, menuIds } = UserStore()
+  const store = appStore()
+  const { token, menuIds } = appStore().UserStore
   // 白名单
   const wihteList = ['/login']
   // 无token且不属于白名单。 返回login页面
@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
-      store.setNavList(to)
+      store.LayoutStore.setNavList(to)
       // 菜单权限
       const getRoute = (menu: RouteRecordRaw[]) => {
         menu.forEach((item, index) => {
@@ -78,7 +78,7 @@ router.beforeEach((to, from, next) => {
       }
       getRoute(menuRouter)
       // 放在pinia中
-      store.setMenuList(menuRouter)
+      store.UserStore.setMenuList(menuRouter)
       next()
     }
   } else {

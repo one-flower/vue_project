@@ -1,0 +1,84 @@
+#app {
+
+  // 侧边导航栏样式
+  .sidebar-container {
+    transition: width 0.5s;
+    width: $sideBarWidth !important;
+    background-color: $menuColor;
+    height: 100%;
+    position: fixed;
+    font-size: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    overflow: hidden;
+
+    // reset element-ui css  折叠面板过渡动画
+    .horizontal-collapse-transition {
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+    }
+
+    // 滚动条
+    .scrollbar-wrapper {
+      overflow-x: hidden !important;
+      height: calc(100% - $logoHeight);
+    }
+
+    //纵向
+    .is-vertical {
+      width: 8px;
+      right: 0px;
+    }
+
+    // 横向
+    .is-horizontal {
+      display: none;
+    }
+
+    // 主题
+    .el-scrollbar__thumb {
+      background: #090b0e;
+    }
+
+    // 菜单
+    .el-menu {
+      border: none;
+      height: 100%;
+      width: 100% !important;
+    }
+  }
+
+  // 隐藏导航栏样式
+  .hideSidebar {
+    .sidebar-container {
+      width: $hideWidth !important;
+    }
+
+    .main-container {
+      margin-left: $hideWidth;
+
+      .navbar-container {
+        width: calc(100% - $hideWidth) !important;
+        margin-left: $hideWidth;
+      }
+    }
+
+  }
+
+  // 右侧内容
+  .main-container {
+    min-height: 100%;
+    transition: margin-left .5s;
+    margin-left: $sideBarWidth;
+    position: relative;
+    .appmain-container{
+      
+    }
+  }
+
+  .el-menu--collapse .el-menu .el-submenu {
+    min-width: $sideBarWidth !important;
+  }
+
+}

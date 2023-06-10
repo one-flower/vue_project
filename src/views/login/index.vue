@@ -55,7 +55,7 @@
 import type { FormRules, FormInstance } from 'element-plus/es';
 import { isCode } from '@/utils/verify'
 import { loginCode } from '@/api/user';
-import { UserStore } from '@/stores';
+import appStore from '@/stores';
 import { toast } from '@/utils/tips';
 
 const loginForm = reactive({
@@ -86,7 +86,7 @@ onMounted(() => {
 })
 // 登录
 const loading = ref(false)
-const store = UserStore()
+const store = appStore()
 const router = useRouter();
 const refLoginForm = ref();
 const loginSubmit = async (refLoginForm: FormInstance) => {
@@ -94,7 +94,7 @@ const loginSubmit = async (refLoginForm: FormInstance) => {
   await refLoginForm.validate((valid, fields) => {
     if (valid) {
       loading.value = true
-      store.login(loginForm).then(res => {
+      store.UserStore.login(loginForm).then(res => {
         toast('登录成功')
         router.replace('/');
       }).catch(err => {

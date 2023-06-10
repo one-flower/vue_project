@@ -1,10 +1,14 @@
-import { createPinia } from 'pinia'
-import piniaPersist from 'pinia-plugin-persist'
+import { UserStore } from "./modules/user";
+import { LayoutStore } from "./modules/layout";
 
-const pinia = createPinia()
-pinia.use(piniaPersist)
+export interface appStore {
+  UserStore: ReturnType<typeof UserStore>;
+  LayoutStore: ReturnType<typeof LayoutStore>;
+}
 
-export default pinia
-
-export { UserStore } from './modules/user'
-export { LayoutStore } from './modules/layout'
+export default function appStore() {
+  return {
+    UserStore: UserStore(),
+    LayoutStore: LayoutStore(),
+  }
+}

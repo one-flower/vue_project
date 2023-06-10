@@ -4,7 +4,7 @@ import type {
   InternalAxiosRequestConfig,
   AxiosResponse,
 } from 'axios'
-import { UserStore } from '@/stores'
+import appStore from '@/stores'
 
 const request: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
@@ -51,9 +51,9 @@ function removePendingRequest(config: InternalAxiosRequestConfig) {
 request.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // 添加请求信息
-    const store = UserStore()
-    if (store.token) {
-      config.headers.token = store.token
+    const store = appStore()
+    if (store.UserStore.token) {
+      config.headers.token = store.UserStore.getToken
     }
     // get请求处理
     if (config.method?.toLocaleLowerCase() === 'get') {
