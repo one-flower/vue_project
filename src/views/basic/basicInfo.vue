@@ -114,7 +114,6 @@ let obj1 = ({
   age: ref(18),
   num: 18
 })
-
 </script>
 
 <style lang="scss" scoped>

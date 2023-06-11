@@ -1,26 +1,31 @@
 import { defineStore } from "pinia";
 interface LayoutStore {
-  navList: any[];
-  silderStatus: boolean;
   elSize: "" | "large" | "default" | "small";
+  silderStatus: boolean;
+  navIndex: number;
+  navList: any[];
 }
 
 export const LayoutStore = defineStore({
   id: "layout",
   state: (): LayoutStore => ({
-    navList: [],
-    silderStatus: false,
     elSize: "default",
+    silderStatus: false,
+    navIndex: 0,
+    navList: [],
   }),
   getters: {},
   actions: {
+    // 更改尺寸
+    changeSize(e: "" | "large" | "default" | "small") {
+      this.elSize = e;
+    },
     // aside 伸缩
     changeAsideStatus() {
       this.silderStatus = !this.silderStatus;
     },
-    // 更改尺寸
-    changeSize(e: "" | "large" | "default" | "small") {
-      this.elSize = e;
+    setNavIndex(index:number){
+      this.navIndex = index
     },
     // nav 中 tag导航块
     setNavList(route: any) {

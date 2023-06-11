@@ -2,7 +2,7 @@
   <div :class="classObj" class="app-wrapper">
     <Sidebar class="sidebar-container" />
     <main class="main-container">
-      <Navbar/>
+      <Navbar />
       <AppMain class="appmain-container" />
     </main>
   </div>
@@ -13,10 +13,10 @@ import Navbar from './Navbar/index.vue'
 import Sidebar from './Sidebar/index.vue'
 import AppMain from './AppMain/index.vue'
 import appStore from '@/stores'
-const store = appStore()
+const { LayoutStore } = appStore()
 const classObj = computed(() => {
   return {
-    hideSidebar: store.LayoutStore.silderStatus
+    hideSidebar: LayoutStore.silderStatus
   }
 })
 </script>

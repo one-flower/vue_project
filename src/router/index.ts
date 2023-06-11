@@ -50,24 +50,26 @@ const router = createRouter({
 
 // 全局前置导航守卫
 router.beforeEach((to, from, next) => {
+  const { UserStore, LayoutStore } = appStore()
+  console.log(LayoutStore.navList);
+    console.log();
+    
   NProgress.start()
-  const store = appStore()
-  const { token, menuIds } = appStore().UserStore
   // 白名单
   const wihteList = ['/login']
   // 无token且不属于白名单。 返回login页面
-  if (token) {
+  if (UserStore.token) {
     //登录
 
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
-      store.LayoutStore.setNavList(to)
+      LayoutStore.setNavList(to)
       // 菜单权限
       const getRoute = (menu: RouteRecordRaw[]) => {
         menu.forEach((item, index) => {
           // 除去没有的
-          if (!menuIds.includes(item.menuId)) {
+          if (!UserStore.menuIds.includes(item.menuId)) {
             menu.splice(index, 1)
           } else {
             if (item.children) {
@@ -78,7 +80,7 @@ router.beforeEach((to, from, next) => {
       }
       getRoute(menuRouter)
       // 放在pinia中
-      store.UserStore.setMenuList(menuRouter)
+      UserStore.setMenuList(menuRouter)
       next()
     }
   } else {
