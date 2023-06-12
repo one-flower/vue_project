@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider :size="LayoutStore.elSize" :z-index="zIndex">
+  <el-config-provider :size="LayoutStore.elSize">
     <router-view />
   </el-config-provider>
 </template>

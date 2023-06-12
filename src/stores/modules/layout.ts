@@ -24,11 +24,13 @@ export const LayoutStore = defineStore({
     changeAsideStatus() {
       this.silderStatus = !this.silderStatus;
     },
-    setNavIndex(index:number){
-      this.navIndex = index
+    setNavIndex(index: number) {
+      this.navIndex = index;
     },
     // nav 中 tag导航块
     setNavList(route: any) {
+      console.log(route, this.navList);
+
       if (this.navList.length === 0) this.navList.push(route);
       let arr = this.navList.map((item) => {
         return item.fullPath;
@@ -40,5 +42,16 @@ export const LayoutStore = defineStore({
         return item.fullPath !== route.fullPath;
       });
     },
+  },
+  persist: {
+    // 开启持久化
+    enabled: true,
+    // 选择存储方式和内容
+    strategies: [
+      {
+        storage: sessionStorage,
+        paths: ["elSize", "silderStatus", "navIndex", "navList"],
+      },
+    ],
   },
 });

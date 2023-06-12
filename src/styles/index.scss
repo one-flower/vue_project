@@ -45,8 +45,9 @@ h4 {
 }
 
 .container {
+  position: relative;
   padding: 15px;
-  height: calc(100% - $hideWidth);
+  height: 100%;
   overflow: auto;
   box-sizing: border-box;
 }

@@ -68,12 +68,12 @@
 
   // 右侧内容
   .main-container {
-    min-height: 100%;
+    height: 100%;
     transition: margin-left .5s;
     margin-left: $sideBarWidth;
     position: relative;
     .appmain-container{
-      
+      height: calc(100% - $logoHeight - $tagsHeight);
     }
   }
 

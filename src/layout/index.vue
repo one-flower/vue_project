@@ -20,3 +20,8 @@ const classObj = computed(() => {
   }
 })
 </script>
+<style scoped lang="scss">
+.app-wrapper{
+  height: 100%;
+}
+</style>

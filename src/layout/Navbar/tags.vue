@@ -2,8 +2,6 @@
   <div>
     <el-scrollbar class="navTags__scroll" ref="scrollbarRef" wrap-style="overflow-x: hidden"
       @wheel.prevent="onHandleScroll">
-      <!-- tag.path -->
-      <!--  -->
       <router-link v-for="(tag, index) in LayoutStore.navList" :ref="tag.path" :key="tag.path"
         :to="{ path: tag.path, query: tag.query }" class="navTags__scroll--tab" @click.middle.native=""
         @contextmenu.prevent.native="">
@@ -32,25 +30,21 @@ const { proxy } = getCurrentInstance() as any
 
 const scrollbarRef = ref(null)
 const tagsRefs = reactive<HTMLDivElement>([])
-// const currentInstance = getCurrentInstance()
 watch(() => route.path, () => {
   nextTick(() => {
-    let leftWidth = proxy.$refs[route.path][0].$el.offsetLeft -  proxy.$refs[route.path][0].$el.offsetWidth
-    LayoutStore.setNavIndex(leftWidth)
-    proxy.$refs.scrollbarRef.$refs.wrapRef.scrollLeft = leftWidth
+    let scroll = proxy.$refs.scrollbarRef.$refs.wrapRef
+    if(LayoutStore.navIndex === 0) scroll.scrollLeft = 0
+
+    let el = proxy.$refs[route.path][LayoutStore.navIndex].$el
+    // let el
+    if(el.offsetLeft + el.offsetWidth <= scroll.scrollWidth){ 
+      // 不用动
+    }else {
+
+    }
+    // let leftWidth = proxy.$refs[route.path][0].$el.offsetLeft -  proxy.$refs[route.path][0].$el.offsetWidth
+    // proxy.$refs.scrollbarRef.$refs.wrapRef.scrollLeft = leftWidth
   })
-
-
-  // return
-  // let el = proxy.$refs.scrollbarRef.$el
-
-  // el.scrollLeft = 100
-  // console.log(el,el.scrollLeft,el.scrollWidth);
-  // console.log(tagsRefs[(LayoutStore.navList.length - 1)|| 0].$el);
-
-  // console.log( tagsRefs[(LayoutStore.navList.length - 1)|| 0].$el);
-
-
 })
 
 const onHandleScroll = (e: any) => {
