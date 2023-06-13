@@ -1,7 +1,7 @@
 <template>
   <el-tabs v-model="LayoutStore.navIndex" type="card" class="navTabs-demo" closable @tab-click="clickTab"
     @tab-remove="removeTab">
-    <el-tab-pane v-for="tag in LayoutStore.navList" :key="tag.path" :label="tag.meta.title" :name="tag.path">
+    <el-tab-pane v-for="(tag, key) in LayoutStore.navList" :key="tag.path" :label="tag.meta.title" :name="key">
       <template #label>
         <span class="custom-tabs-label">
           {{ tag.meta.title }}
@@ -11,33 +11,35 @@
   </el-tabs>
 
   <!-- <div class="navTabs__menu">
-      <div>关闭其他</div>
-      <div>关闭全部</div>
-    </div> -->
+    <div>关闭其他</div>
+    <div>关闭全部</div>
+  </div> -->
 </template>
 
 <script setup lang="ts">
 import appStore from '@/stores'
 import { TabsPaneContext } from 'element-plus/es/components/tabs/src/constants'
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
+
 const { LayoutStore } = appStore()
-const router = useRouter()
+const router = useRouter();
 
 const clickTab = (panb: TabsPaneContext) => {
-  for (const item of LayoutStore.navList) {
-    if (item.path === panb.paneName) {
-      router.push({
-        path: item.path,
-        query: item.query,
-        params: item.params,
-      })
-      break
-    }
-  }
+
+  toPath(LayoutStore.navList[panb.navIndex])  
 }
 
-const removeTab = (routePath: string) => {
+const removeTab = (routePath: number) => {
+
   LayoutStore.removeNavList(routePath)
+
+}
+const toPath = (routerInfo: any) => {
+  router.push({
+    path: routerInfo.path,
+    query: routerInfo.query,
+    params: routerInfo.params,
+  });
 }
 </script>
 

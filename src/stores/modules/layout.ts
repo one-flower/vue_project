@@ -29,16 +29,27 @@ export const LayoutStore = defineStore({
     },
     // nav 中 tag导航块
     setNavList(route: any) {
-      if (this.navList.length === 0) this.navList.push(route);
-      let arr = this.navList.map((item) => {
-        return item.fullPath;
-      });
-      if (!arr.includes(route.fullPath)) this.navList.push(route);
+      if (this.navList.length === 0) {
+        this.navList.push(route);
+        this.setNavIndex(0);
+      } else {
+        let arr = this.navList.map((item) => {
+          return item.fullPath;
+        });
+        if (!arr.includes(route.fullPath)) {
+          this.navList.push(route);
+          this.setNavIndex(arr.length);
+        }
+      }
     },
-    removeNavList(route: string) {
-      this.navList = this.navList.filter((item) => {
-        return item.fullPath !== route;
-      });
+    removeNavList(routeIndex: number) {
+      if (routeIndex === this.navList.length) {
+        this.navIndex = routeIndex--;
+      } else {
+        this.navIndex = routeIndex;
+      }
+
+      this.navList.slice(routeIndex, 1);
     },
   },
   persist: {
