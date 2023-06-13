@@ -46,10 +46,11 @@ h4 {
 
 .container {
   position: relative;
-  padding: 15px;
   height: 100%;
-  overflow: auto;
+  padding: 15px;
   box-sizing: border-box;
+  overflow: auto;
+  background-color: rgb(240,242,245);
 }
 
 .wid {

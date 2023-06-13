@@ -51,9 +51,6 @@ const router = createRouter({
 // 全局前置导航守卫
 router.beforeEach((to, from, next) => {
   const { UserStore, LayoutStore } = appStore()
-  console.log(LayoutStore.navList);
-    console.log();
-    
   NProgress.start()
   // 白名单
   const wihteList = ['/login']
@@ -64,7 +61,8 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
-      LayoutStore.setNavList(to)
+      if(to.fullPath !== '/') LayoutStore.setNavList(to)
+      
       // 菜单权限
       const getRoute = (menu: RouteRecordRaw[]) => {
         menu.forEach((item, index) => {

@@ -2,7 +2,7 @@
   <div :class="classObj" class="app-wrapper">
     <Sidebar class="sidebar-container" />
     <main class="main-container">
-      <Navbar />
+      <Navbar class="navbar-container"/>
       <AppMain class="appmain-container" />
     </main>
   </div>

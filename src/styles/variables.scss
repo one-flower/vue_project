@@ -11,9 +11,10 @@ $panGreen: #30B08F;
 // sidebar
 $sideBarWidth: 200px;
 $hideWidth: 64px;
-$logoHeight:48px;
+$logoHeight:60px;
 $logoColor: #2b2f3a;
-$tagsHeight: 32px;
+$tabsHeight: 40px;
+$tabsBgColor: #fff;
 
 $menuColor:#304156;
 $menuHover:#263445;
@@ -24,7 +25,6 @@ $menuActiveText: #409EFF;
 $subMenuActiveText:#f4f4f5;
 $submenuColor:#263443;
 $subMenuHover:#001528;
-$navbarHeight: 48px;
 
 :export {
   menuColor: $menuColor;

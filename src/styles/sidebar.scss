@@ -73,7 +73,7 @@
     margin-left: $sideBarWidth;
     position: relative;
     .appmain-container{
-      height: calc(100% - $logoHeight - $tagsHeight);
+      height: calc(100% - $logoHeight - $tabsHeight);
     }
   }
 

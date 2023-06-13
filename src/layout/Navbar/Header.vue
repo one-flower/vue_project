@@ -66,7 +66,6 @@ import { useRoute } from 'vue-router'
 const { UserStore, LayoutStore } = appStore()
 const route = useRoute()
 
-
 // 控制aside
 const changeSider = () => {
   LayoutStore.changeAsideStatus()
@@ -88,8 +87,6 @@ const loginOut = () => {
   }).catch(err => {
   })
 }
-
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 </script>
 
 <style scoped lang="scss">

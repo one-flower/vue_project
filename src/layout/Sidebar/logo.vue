@@ -1,7 +1,7 @@
 <template>
   <div class="logo-container">
     <svg-icon icon="poke" class="logo-container--icon" />
-    <div class="logo-container--info">精灵11111球</div>
+    <div class="logo-container--info">精灵1dfadfd1111球</div>
   </div>
 </template>
 <script setup lang="ts">
@@ -10,7 +10,7 @@
 
 .logo-container {
   width: 100%;
-  height: $navbarHeight;
+  height: $logoHeight;
   text-align: center;
   color: #fff;
   background-color: $logoColor;
@@ -27,8 +27,8 @@
 
   &--info {
     width: 120px;
-    height: 40px;
-    line-height: 40px;
+    height: $logoHeight;
+    line-height: $logoHeight;
     text-align: center;
     font-size: 18px;
     font-weight: bold;

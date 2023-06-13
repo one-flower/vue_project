@@ -29,17 +29,15 @@ export const LayoutStore = defineStore({
     },
     // nav 中 tag导航块
     setNavList(route: any) {
-      console.log(route, this.navList);
-
       if (this.navList.length === 0) this.navList.push(route);
       let arr = this.navList.map((item) => {
         return item.fullPath;
       });
       if (!arr.includes(route.fullPath)) this.navList.push(route);
     },
-    removeNavList(route: any) {
+    removeNavList(route: string) {
       this.navList = this.navList.filter((item) => {
-        return item.fullPath !== route.fullPath;
+        return item.fullPath !== route;
       });
     },
   },

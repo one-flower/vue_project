@@ -54,6 +54,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     server: {
       port: 9789,
       https: false,
+      hmr: true,
       proxy: {
         // 使用 proxy 实例
         [env.VITE_BASE_API]: {
