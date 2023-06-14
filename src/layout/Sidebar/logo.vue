@@ -1,13 +1,12 @@
 <template>
   <div class="logo-container">
     <svg-icon icon="poke" class="logo-container--icon" />
-    <div class="logo-container--info">精灵1dfadfd1111球</div>
+    <div class="logo-container--info" title="">精灵1dfadfd1111球</div>
   </div>
 </template>
 <script setup lang="ts">
 </script>
 <style scoped lang="scss">
-
 .logo-container {
   width: 100%;
   height: $logoHeight;
@@ -15,6 +14,7 @@
   color: #fff;
   background-color: $logoColor;
   box-sizing: border-box;
+  overflow: hidden;
 
   &--icon {
     padding: 8px;
@@ -35,6 +35,9 @@
     display: inline-block;
     vertical-align: middle;
     animation: rotateTitle .8s ease-in-out;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

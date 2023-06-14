@@ -16,6 +16,6 @@ const app = createApp(App);
 
 app.use(router).use(pinia).mount("#app");
 // 打印错误
-app.config.errorHandler = (err) => {
-  console.log("err", err);
-};
+// app.config.errorHandler = (err) => {
+//   console.log("err", err);
+// };

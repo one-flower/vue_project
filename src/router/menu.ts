@@ -3,46 +3,29 @@ import Layout from "@/layout/index.vue";
 
 const menuRouter: RouteRecordRaw[] = [
   {
-    path: "/name",
+    path: "/sys",
     menuId: 100,
     meta: {
-      title: "我是首页",
+      title: "系统设置",
       icon: "win",
     },
     component: Layout,
     children: [
       {
-        path: "basicInfo",
+        path: "api",
         menuId: 101,
         meta: {
-          title: "我是首页1",
+          title: "接口配置",
         },
-        children: [
-          {
-            path: "computed",
-            menuId: 101,
-            meta: {
-              title: "首页2",
-            },
-            component: () => import("@/views/basic/computed.vue"),
-          },
-          {
-            path: ":id",
-            menuId: 101,
-            meta: {
-              title: "page1",
-            },
-            component: () => import("@/views/page3.vue"),
-          },
-        ],
+        component: () => import("@/views/sys/api.vue"),
       },
       {
-        path: "ccc",
-        menuId: 101,
+        path: "menu",
+        menuId: 102,
         meta: {
-          title: "首页2",
+          title: "菜单配置",
         },
-        component: () => import("@/views/basic/basicInfo.vue"),
+        component: () => import("@/views/sys/menu.vue"),
       },
     ],
   },

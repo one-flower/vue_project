@@ -1,9 +1,9 @@
 <template>
-  <el-tabs v-model="LayoutStore.navIndex" type="card" class="navTabs-demo" closable @tab-click="clickTab"
-    @tab-remove="removeTab">
+  <el-tabs v-model="LayoutStore.navIndex" type="card" class="navTabs-demo"
+    :closable="LayoutStore.navList.length === 1 ? false : true" @tab-click="clickTab" @tab-remove="removeTab">
     <el-tab-pane v-for="(tag, key) in LayoutStore.navList" :key="tag.path" :label="tag.meta.title" :name="key">
       <template #label>
-        <span class="custom-tabs-label">
+        <span>
           {{ tag.meta.title }}
         </span>
       </template>
@@ -20,20 +20,25 @@
 import appStore from '@/stores'
 import { TabsPaneContext } from 'element-plus/es/components/tabs/src/constants'
 import { useRouter } from "vue-router";
-
 const { LayoutStore } = appStore()
 const router = useRouter();
 
 const clickTab = (panb: TabsPaneContext) => {
-
-  toPath(LayoutStore.navList[panb.navIndex])  
+  toPath(LayoutStore.navList[Number(panb.index)])
 }
 
-const removeTab = (routePath: number) => {
-
-  LayoutStore.removeNavList(routePath)
-
+const removeTab = (index: number) => {
+  if (index + 1 === LayoutStore.navList.length) {
+    // 处理尾数组
+    index--
+    LayoutStore.removeNavList(index + 1)
+  } else {
+    LayoutStore.removeNavList(index)
+  }
+  toPath(LayoutStore.navList[index])
 }
+
+// 跳转路由
 const toPath = (routerInfo: any) => {
   router.push({
     path: routerInfo.path,
@@ -48,7 +53,7 @@ const toPath = (routerInfo: any) => {
   color: #333;
 
   .el-tabs__header {
-    border-bottom: 1px solid #e4e7ed;
+    margin: 0;
   }
 
   .el-tabs__content {
@@ -59,9 +64,20 @@ const toPath = (routerInfo: any) => {
     height: $tabsHeight !important;
   }
 
-  // .el-tabs__item:hover {
-  //   color:  #95d475;
-  // }
+  .el-tabs__item:nth-child(1)>i {
+    display: none;
+  }
+
+  .el-tabs__item::before {
+    content: '';
+    position: relative;
+    right: 5px;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: #a0cfff;
+  }
+
   .is-active {
     background: #ecf5ff;
     color: #79bbff;

@@ -77,7 +77,6 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data } = response
-    console.log(response,'response');
     
     if (response.config.responseType === 'arraybuffer') {
       // 处理arraybuffer 为png图片

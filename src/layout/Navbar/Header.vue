@@ -8,12 +8,9 @@
     <div class="navHeader__breadcrumb">
       <el-breadcrumb separator="/" size="large">
         <transition-group name='breadcrumb'>
-          <el-breadcrumb-item key='/' to="/">主页</el-breadcrumb-item>
-          <el-breadcrumb-item v-for="(item, index) in route.matched" :key='item.path'>
-            <!-- <span v-if="item.redirect === 'noRedirect' || index == route.matched.length - 1"> -->
+          <!-- <el-breadcrumb-item key='/home' to="/home">主页</el-breadcrumb-item> -->
+          <el-breadcrumb-item v-for="item in matched" :key='item.path'>
             {{ item.meta.title }}
-            <!-- </span> -->
-            <!-- <a v-else @click.prevent="handleLink(item, index)">{{ item.meta.title + '1111' }}</a> -->
           </el-breadcrumb-item>
         </transition-group>
       </el-breadcrumb>
@@ -35,9 +32,9 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <div title="格式" @click="reload" class="navHeader__menu__item">
+      <!-- <div title="格式" @click="reload" class="navHeader__menu__item">
         <svg-icon icon="setting" :size="20"></svg-icon>
-      </div>
+      </div> -->
       <!-- 个人功能菜单 -->
       <el-dropdown trigger="click" class="navHeader__menu__item">
         <!-- 头像 -->
@@ -61,6 +58,7 @@
 </template>
 
 <script setup lang="ts">
+import router from '@/router'
 import appStore from '@/stores'
 import { useRoute } from 'vue-router'
 const { UserStore, LayoutStore } = appStore()
@@ -87,6 +85,13 @@ const loginOut = () => {
   }).catch(err => {
   })
 }
+
+const matched = computed(() => {
+  return route.matched.filter(item => {
+    return item.path !== '/'
+  })
+  // return routeList
+})
 </script>
 
 <style scoped lang="scss">

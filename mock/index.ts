@@ -14,7 +14,7 @@ export default [
           headImg:
             "https://idss-tp.oss-cn-beijing.aliyuncs.com/4ecfb753ef194afd914516d5068eba39_202303141429452945.jpg",
           token: "q1w2e3r4a5s6d7f8z9x0c_v",
-          menuIds: [100, 101, 103, 104, 201],
+          menuIds: [100, 101, 102, 103, 104, 201],
         },
       };
     },
