@@ -1,5 +1,5 @@
 import { MockMethod } from 'vite-plugin-mock'
-
+import userMock from './user'
 export default [
   {
     url: '/dev-api/api/getUserInfo', // 注意，这里只能是string格式
@@ -29,24 +29,5 @@ export default [
       }
     },
   },
-  {
-    url: '/dev-api/api/page',
-    method: 'post',
-    response: () => {
-      return {
-        code: 200,
-        data: {
-          pageNo: 1,
-          pageSize: 10,
-          total: 4,
-          result: [
-            { id: 1, name: '接口1', model: 'x', status: 0 },
-            { id: 2, name: '接口2', model: 'x', status: 1 },
-            { id: 3, name: '接口3', model: 'x', status: 0 },
-            { id: 4, name: '接口4', model: 'y', status: 0 },
-          ],
-        },
-      }
-    },
-  },
+  ...userMock
 ] as MockMethod[]

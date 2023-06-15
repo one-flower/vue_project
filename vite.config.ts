@@ -23,6 +23,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       extensions: [".js", ".json", ".ts"], // 使用路径别名时想要省略的后缀名，可以自己 增减
     },
     build: {
+      sourcemap: process.env.NODE_ENV === 'production',
       target: "esnext", //浏览器兼容
       assetsInlineLimit: 10240, //10k文件转base64
       outDir: "dist",
@@ -54,7 +55,6 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     server: {
       port: 9789,
       https: false,
-      hmr: true,
       proxy: {
         // 使用 proxy 实例
         [env.VITE_BASE_API]: {

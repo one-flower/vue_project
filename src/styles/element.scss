@@ -1,11 +1,7 @@
-:deep(.el-menu) {
-  height: 100%;
-  border-right: none !important;
-  color: #fff !important;
-}
-:deep(.el-sub-menu__title) {
-  padding-left: 10px;
-}
-:deep(.el-select) {
+  .el-select{
+    width: 100% !important;
+  }
+
+.wid {
   width: 100%;
 }
