@@ -58,7 +58,6 @@
 </template>
 
 <script setup lang="ts">
-import router from '@/router'
 import appStore from '@/stores'
 import { useRoute } from 'vue-router'
 const { UserStore, LayoutStore } = appStore()
@@ -101,7 +100,7 @@ const matched = computed(() => {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  border-bottom: 1px solid #e4e7ed;
 
   &__sign {
     width: $logoHeight;

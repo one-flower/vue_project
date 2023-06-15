@@ -13,9 +13,10 @@
 <script setup lang="ts">
 import appStore from '@/stores';
 import { useRoute } from 'vue-router'
-const route = useRoute()
 
 const { LayoutStore } = appStore()
+const route = useRoute()
+
 // cachedViews
 /* keep-alive
  * include 匹配的组件会被缓存 

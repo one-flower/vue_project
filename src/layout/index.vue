@@ -14,10 +14,27 @@ import Sidebar from './Sidebar/index.vue'
 import AppMain from './AppMain/index.vue'
 import appStore from '@/stores'
 const { LayoutStore } = appStore()
+
 const classObj = computed(() => {
   return {
     hideSidebar: LayoutStore.silderStatus
   }
+})
+
+// 监听浏览器大小
+const getTabsize = () =>{
+  let rect = document.body.getBoundingClientRect()
+  if(rect.width <= 768){
+    LayoutStore.silderStatus = true
+  }else{
+    LayoutStore.silderStatus = false
+  }
+}
+
+window.addEventListener('resize', getTabsize)
+
+onUnmounted(()=>{
+  window.addEventListener('resize', getTabsize)
 })
 </script>
 <style scoped lang="scss">

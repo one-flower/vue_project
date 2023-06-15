@@ -16,6 +16,6 @@ import Tabs from './Tabs.vue'
   height: $tabsHeight;
   align-items: center;
   overflow: hidden;
-  // border-bottom: 1px solid #e4e7ed;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
 </style>

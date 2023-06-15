@@ -6,3 +6,6 @@
 :deep(.el-sub-menu__title) {
   padding-left: 10px;
 }
+:deep(.el-select) {
+  width: 100%;
+}
