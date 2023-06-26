@@ -1,5 +1,7 @@
 import { MockMethod } from 'vite-plugin-mock'
 import userMock from './user'
+//! 测试环境开启 需要使用 env的前缀 + /api
+
 export default [
   {
     url: '/dev-api/api/getUserInfo', // 注意，这里只能是string格式

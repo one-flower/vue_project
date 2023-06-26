@@ -29,6 +29,7 @@ import { useRoute } from 'vue-router';
 
 const store = appStore()
 const route = useRoute()
+
 </script>
 
 <style lang="scss" scoped>

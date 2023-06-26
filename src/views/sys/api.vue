@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="模块：" prop="model">
-            <el-select v-model="searchObj.model" placeholder="接口模块" clearable  class="wid">
+            <el-select v-model="searchObj.model" placeholder="接口模块" clearable class="wid">
               <el-option v-for="item in modelList" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
@@ -44,8 +44,8 @@
         <el-table-column label="模块" prop="model" align="center" />
         <el-table-column label="状态" prop="status" align="center" width="80px" />
       </el-table>
-      <pagiation :page-no="searchObj.pageNo"></pagiation>
-
+      {{ searchObj }}
+      <pagiation v-model:page-no="searchObj.pageNo" v-model:page-num="searchObj.pageNum" @change="initTable"></pagiation>
     </div>
   </div>
 </template>
@@ -67,7 +67,7 @@ const searchObj = reactive({
   model: undefined,
   status: undefined,
   pageNo: 1,
-  pageSize: 10,
+  pageNum: 10,
   total: 0,
 })
 let tableData = reactive({
@@ -78,7 +78,7 @@ const initTable = () => {
   apiPage(searchObj).then(res => {
     tableData.result = res.data.result
     searchObj.total = res.data.total
-    searchObj.pageNo = 2
+    searchObj.pageNo = 1
   })
 }
 initTable()
@@ -90,11 +90,7 @@ const onSearch = () => {
 
 const reset = () => {
   const form = unref(searchRef)
-  console.log(form);
-
   form.resetFields()
-  console.log(searchObj);
-
 }
 </script>
 <style scoped lang="scss"></style>

@@ -1,12 +1,9 @@
-import { _RouteRecordBase } from "vue-router";
+import { _RouteRecordBase } from 'vue-router'
 
-interface metaType {
-  title?: string;
-  icon?: string;
-}
-declare module "vue-router" {
+declare module 'vue-router' {
   interface _RouteRecordBase {
-    menuId: number;
-    meta: metaType;
+    menuId: number
+    title?: string
+    icon?: string
   }
 }

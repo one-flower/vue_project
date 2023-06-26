@@ -1,14 +1,15 @@
 <template>
-  {{ props }}
   <div class="pagination">
     <el-pagination v-model:currentPage="props.pageNo" @current-change="currentChange" @size-change="sizeChange"
-    :page-size="props.pageNum" :page-sizes="props.pageSizes" layout="total, sizes, prev, pager, next, jumper"
-    :total="props.total" background>
-    :pager-count="7">
-  </el-pagination>
+      :page-size="props.pageNum" :page-sizes="props.pageSizes" layout="total, sizes, prev, pager, next, jumper"
+      :total="props.total" background>
+      :pager-count="7">
+    </el-pagination>
   </div>
 </template>
 <script setup lang="ts">
+
+const emit = defineEmits(['update:pageNo', 'update:pageNum','change'])
 const props = defineProps({
   pageNo: {
     type: Number,
@@ -23,7 +24,7 @@ const props = defineProps({
     default: 0
   },
   pageSizes: {
-    type: Array,
+    type: Array as PropType<number[]>,
     default: () => {
       return [10, 20, 50, 100]
     }
@@ -31,16 +32,18 @@ const props = defineProps({
 })
 
 // 修改尺寸
-const sizeChange = () => {
-  // emit(update: pageNum, 2)
+const sizeChange = (pageNum:number) => {
+  emit('update:pageNum', pageNum)
+  emit('change')
 }
 // 修改页码
-const currentChange = () => {
-
+const currentChange = (pageNo:number) => {
+  emit('update:pageNo', pageNo)
+  emit('change')
 }
 </script>
 <style scoped lang="scss">
-.pagination{
+.pagination {
   float: right;
   margin: 5px 0;
 }

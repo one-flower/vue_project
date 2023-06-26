@@ -13,7 +13,7 @@ const menuRouter: RouteRecordRaw[] = [
     children: [
       {
         path: "api",
-        menuId: 101,
+        menuId: 110,
         meta: {
           title: "接口配置",
         },
@@ -21,7 +21,7 @@ const menuRouter: RouteRecordRaw[] = [
       },
       {
         path: "menu",
-        menuId: 102,
+        menuId: 120,
         meta: {
           title: "菜单配置",
         },
@@ -31,7 +31,7 @@ const menuRouter: RouteRecordRaw[] = [
   },
   {
     path: "/page",
-    menuId: 100,
+    menuId: 200,
     meta: {
       title: "page",
       icon: "win",
@@ -40,7 +40,7 @@ const menuRouter: RouteRecordRaw[] = [
     children: [
       {
         path: "page1",
-        menuId: 101,
+        menuId: 210,
         meta: {
           title: "page1",
         },
@@ -48,7 +48,7 @@ const menuRouter: RouteRecordRaw[] = [
       },
       {
         path: "page2",
-        menuId: 101,
+        menuId: 220,
         meta: {
           title: "page2",
         },

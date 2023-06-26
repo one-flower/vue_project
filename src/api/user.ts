@@ -29,7 +29,7 @@ import request from '@/utils/request'
 
 export function loginCode() {
   return request({
-    url: 'api/image-captcha',
+    url: '/api/image-captcha',
     method: 'get',
     // responseType: 'arraybuffer',
   })
@@ -40,5 +40,13 @@ export function login(data: any) {
     url: '/api/getUserInfo',
     method: 'get',
     data: data,
+  })
+}
+
+export function menuList() {
+  return request({
+    url: '/api/menu/List',
+    method: 'post',
+    // data: data,
   })
 }
