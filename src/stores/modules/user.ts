@@ -139,7 +139,7 @@ export const UserStore = defineStore({
     strategies: [
       {
         storage: localStorage,
-        paths: ['token', 'account', 'name', 'headImg', 'sex', 'menuList'],
+        paths: ['token', 'account', 'name', 'headImg', 'sex'],
       },
     ],
   },

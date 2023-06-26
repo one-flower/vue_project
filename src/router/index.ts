@@ -4,7 +4,6 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 import appStore from '@/stores'
-import menuRouter from './menu'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -33,19 +32,10 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
-  {
-    path: '/:catchAll(.*)',
-    name: '404',
-    menuId: 2,
-    meta: {
-      title: '404',
-    },
-    component: () => import('@/views/404.vue'),
-  },
 ]
 
 const router = createRouter({
-  routes: routes, //.concat(menuRouter)
+  routes: routes,
   history: createWebHistory(import.meta.env.VITE_ROUTER_NAME),
 })
 
@@ -61,13 +51,25 @@ router.beforeEach(async (to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' })
     } else {
-      if (to.name !== '404') LayoutStore.setNavList(to)
-      
-      let menuData = await UserStore.menuInfo()
-      menuData.forEach((item) => {
-        router.addRoute(item)
-      })
-      next()
+      if (UserStore.menuList.length === 0) {
+        // 重新请求路由
+        let menuData = await UserStore.menuInfo()
+        menuData.forEach((item) => {
+          router.addRoute(item)
+        })
+        // 最后添加 404
+        router.addRoute({
+          path: '/:catchAll(.*)',
+          name: '404',
+          menuId: 4,
+          component: () => import('@/views/404.vue'),
+        })
+        next({ ...to, replace: true })
+      } else {
+        // 
+        if (to.name !== '404') LayoutStore.setNavList(to)
+        next()
+      }
     }
   } else {
     // 未登录
