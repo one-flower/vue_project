@@ -47,6 +47,8 @@ export default [
     url: '/dev-api/api/menu/List',
     method: 'post',
     response: () => {
+      // menuId 100 / 200 这种为父页面
+      // component 为匹配的页面地址，父菜单为 Layout ,子菜单为正常的路径
       return {
         code: 200,
         data: [
@@ -83,6 +85,7 @@ export default [
             title: 'page',
             icon: 'win',
             path: '/page',
+            component: 'Layout',
             permission: '',
           },
           {
@@ -91,6 +94,7 @@ export default [
             title: 'page1',
             icon: 'win',
             path: 'page1',
+            component: '/page1',
             permission: '',
           },
           {
