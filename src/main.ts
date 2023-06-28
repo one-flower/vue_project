@@ -8,8 +8,8 @@ const pinia = createPinia();
 pinia.use(piniaPersist);
 
 import "@/styles/index.scss";
-// import 'element-plus/theme-chalk/el-message.css'
-// import 'element-plus/theme-chalk/el-message-box.css'
+import 'element-plus/theme-chalk/el-message.css'
+import 'element-plus/theme-chalk/el-message-box.css'
 import "virtual:svg-icons-register"; //svg
 
 const app = createApp(App);
