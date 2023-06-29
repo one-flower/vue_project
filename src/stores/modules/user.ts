@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { login, menuList } from '@/api/user'
+import { login, menuQuery } from '@/api/user'
 import router from '@/router'
 import Layout from '@/layout/index.vue'
 const modules = import.meta.glob('@/views/**/*.vue') //匹配views文件
@@ -98,7 +98,7 @@ export const UserStore = defineStore({
      */
     async menuInfo(): Promise<any[]> {
       return new Promise((resolve, reject) => {
-        menuList()
+        menuQuery()
           .then((res) => {
             const setComponent = (view: string) => {
               // 路由懒加载

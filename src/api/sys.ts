@@ -1,9 +1,8 @@
 import request from '@/utils/request'
 
-export function apiPage(data: any) {
+export function apiPage() {
   return request({
-    url: 'api/page',
+    url: 'menu/query',
     method: 'post',
-    data: data,
   })
 }

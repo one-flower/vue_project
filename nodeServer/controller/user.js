@@ -13,12 +13,12 @@ exports.register = async (req, res, next) => {
     const id = lastIndex ? lastIndex.id + 1 : 1
     const data = {
       id: id,
-      userName: body.userName,
-      password: md5(body.userName),
-      name: body.name | null,
-      sex: body.sex | null,
-      age: body.age | null,
-      img: body.img | null,
+      username: body.username,
+      password: md5(body.password),
+      name: body.name || null,
+      sex: body.sex || null,
+      age: body.age || null,
+      img: body.img || null,
       createdTime: format(Date.now()),
       updateTime: format(Date.now()),
     }
@@ -40,14 +40,15 @@ exports.login = async (req, res, next) => {
     const db = await getDb()
 
     const data = db.user.find(item => item.admin === query.admin)
-
     if (data.password === md5(query.password)) {
+      delete data.password
+      data.token = 'iamTokennnnnnnnnnnnnnnnnnnn'
       res.status(200).json({
         code: 200,
         data
       })
     }else{
-      res.status(403).json({
+      res.status(200).json({
         code: 403,
         message: '密码错误'
       })

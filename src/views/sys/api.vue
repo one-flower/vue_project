@@ -75,7 +75,7 @@ let tableData = reactive({
 })
 
 const initTable = () => {
-  apiPage(searchObj).then(res => {
+  apiPage().then(res => {
     tableData.result = res.data.result
     searchObj.total = res.data.total
     searchObj.pageNo = 1

@@ -2,14 +2,64 @@
   "user": [
     {
       "id": 1,
-      "password": "7eed07aeb8574124f78dc1fdcce282f7",
+      "username": "admin",
+      "password": "a2a1274aa7b12efaa2136cd7a04d69b4",
       "name": 0,
       "sex": 0,
       "age": 0,
       "img": 0,
-      "createdTime": "2023-06-29 17:54:00",
-      "updateTime": "2023-06-29 17:54:00"
+      "createdTime": "2023-06-29 22:27:11",
+      "updateTime": "2023-06-29 22:27:11"
     }
   ],
-  "api": []
+  "menu": [
+    {
+      "id": 1,
+      "menuId": 100,
+      "pid": -1,
+      "title": "系统设置",
+      "icon": "win",
+      "path": "/sys",
+      "component": "Layout",
+      "permission": "",
+      "createdTime": "2023-06-29 22:44:06",
+      "updateTime": "2023-06-29 22:44:06"
+    },
+    {
+      "id": 2,
+      "menuId": 110,
+      "pid": 100,
+      "title": "接口配置",
+      "icon": "win",
+      "path": "api",
+      "component": "/sys/api",
+      "permission": "",
+      "createdTime": "2023-06-29 22:50:58",
+      "updateTime": "2023-06-29 22:50:58"
+    },
+    {
+      "id": 3,
+      "menuId": 120,
+      "pid": 100,
+      "title": "菜单配置",
+      "icon": "win",
+      "path": "menu",
+      "component": "/sys/menu",
+      "permission": "",
+      "createdTime": "2023-06-29 22:50:58",
+      "updateTime": "2023-06-29 22:50:58"
+    },
+    {
+      "id": 4,
+      "menuId": "200",
+      "pid": "-1",
+      "title": "page",
+      "icon": "win",
+      "path": "/page",
+      "component": "Layout",
+      "permission": null,
+      "createdTime": "2023-06-30 00:30:10",
+      "updateTime": "2023-06-30 00:30:10"
+    }
+  ]
 }
