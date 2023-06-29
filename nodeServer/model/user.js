@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const baseModel = require('./base-model')
 const md5 = require('@util/md5')
 const userSchema = new mongoose.Schema({
-  userName: {
+  username: {
     type: String,
     required: true
   },

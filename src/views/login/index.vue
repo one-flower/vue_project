@@ -59,9 +59,9 @@ import appStore from '@/stores';
 import { toast } from '@/utils/tips';
 
 const loginForm = reactive({
-  username: '',
-  password: '',
-  code: '',
+  username: 'admin',
+  password: 'admin',
+  code: '0000',
 })
 
 const rules = reactive<FormRules>({

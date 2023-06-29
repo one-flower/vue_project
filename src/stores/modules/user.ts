@@ -66,6 +66,8 @@ export const UserStore = defineStore({
       return new Promise((resolve, reject) => {
         login(loginForm)
           .then((res) => {
+            console.log(res,'sss');
+            
             let data = res.data
             this.setToken(data.token)
             this.setAccount(data.account)

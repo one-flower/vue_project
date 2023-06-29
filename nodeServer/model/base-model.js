@@ -1,7 +1,7 @@
 module.exports = {
   createdTime: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   updateTime: {
     type: Date,

@@ -1,16 +1,14 @@
 {
-  "menu": [
+  "user": [
     {
       "id": 1,
-      "title": "吃饭"11
-    },
-    {
-      "id": 2,
-      "title": "睡觉"
-    },
-    {
-      "id": 3,
-      "title": "打游戏"
+      "password": "7eed07aeb8574124f78dc1fdcce282f7",
+      "name": 0,
+      "sex": 0,
+      "age": 0,
+      "img": 0,
+      "createdTime": "2023-06-29 17:54:00",
+      "updateTime": "2023-06-29 17:54:00"
     }
   ],
   "api": []

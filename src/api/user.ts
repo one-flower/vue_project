@@ -37,7 +37,7 @@ export function loginCode() {
 
 export function login(data: any) {
   return request({
-    url: '/api/getUserInfo',
+    url: '/user/login',
     method: 'get',
     data: data,
   })

@@ -58,8 +58,8 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       proxy: {
         // 使用 proxy 实例
         [env.VITE_BASE_API]: {
-          // target: env.VITE_BASE_URL,
-          target: "http://39.96.53.44:80/",
+          target: env.VITE_BASE_URL,
+          // target: "http://39.96.53.44:80/",
           changeOrigin: true,
           ws: true,
           rewrite: (path) =>

@@ -1,19 +1,55 @@
-const mongoose = require('mongoose');
-const { dbUrl } = require('@config/config.default')
-// mongodb 数据库
-mongoose.connect(dbUrl);
+// const mongoose = require('mongoose');
+// const { dbUrl } = require('@config/config.default')
+// // mongodb 数据库
+// mongoose.connect(dbUrl);
 
-const db = mongoose.connection;
-//连接失败
-db.on('error', err => {
-  console.log('数据库连接失败', err);
-});
-// 连接成功
-db.once('open', function () {
-  // we're connected!
-  console.log('数据库连接成功');
-});
-// 创建模型
+// const db = mongoose.connection;
+// //连接失败
+// db.on('error', err => {
+//   console.log('数据库连接失败', err);
+// });
+// // 连接成功
+// db.once('open', function () {
+//   // we're connected!
+//   console.log('数据库连接成功');
+// });
+// // 创建模型
+// module.exports = {
+//   User: mongoose.model('User', require('./user'))
+// }
+
+// db.js 
+const mysql = require('mysql2');
+const { mysqlConfig } = require('@config/config.default.js');
+
 module.exports = {
-  User: mongoose.model('User', require('./user'))
+  query: function (sql, params, callback) {
+    //每次使用的时候需要创建链接，数据操作完成之后要关闭连接
+    const connection = mysql.createConnection(mysqlConfig)
+    connection.connect(function (err) {
+      console.log('11', err,'11');
+      if (err) {
+        throw err
+      }
+      //开始数据操作
+      connection.query(sql, params, function (err, results, fields) {
+        if (err) {
+          throw err
+        }
+        //将查询出来的数据返回给回调函数
+        callback &&
+          callback(
+            results ? JSON.parse(JSON.stringify(results)) : null,
+            fields ? JSON.parse(JSON.stringify(fields)) : null
+          )
+        //停止链接数据库，必须在查询语句后，要不然一调用这个方法，就直接停止链接，数据操作就会失败
+        connection.end(function (err) {
+          if (err) {
+            console.log('关闭数据库连接失败！')
+            throw err
+          }
+        })
+      })
+    })
+  },
 }
