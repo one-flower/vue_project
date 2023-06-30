@@ -124,6 +124,8 @@ export const UserStore = defineStore({
               return item
             })
             let newRoute = handleTree(r, 'menuId', 'pid')
+            console.log(newRoute);
+            
             this.setMenu(newRoute)
             resolve(newRoute)
           })

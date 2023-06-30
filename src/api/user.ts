@@ -1,4 +1,4 @@
-import request from "@/utils/request";
+import request from '@/utils/request'
 // import qs from 'qs'
 // import { JSEncrypt } from 'jsencrypt'
 
@@ -29,31 +29,47 @@ import request from "@/utils/request";
 
 export function loginCode() {
   return request({
-    url: "/api/image-captcha",
-    method: "get",
+    url: '/api/image-captcha',
+    method: 'get',
     // responseType: 'arraybuffer',
-  });
+  })
 }
 
 export function login(data: any) {
   return request({
-    url: "/user/login",
-    method: "get",
+    url: '/user/login',
+    method: 'get',
     data: data,
-  });
+  })
 }
 
-export function menuQuery() {
+export function menuQuery(data: any) {
   return request({
-    url: "/menu/query",
-    method: "post",
-  });
+    url: '/menu/query',
+    method: 'post',
+    data: data,
+  })
 }
 
 export function menuAdd(data: any) {
   return request({
-    url: "/menu/add",
-    method: "post",
+    url: '/menu/add',
+    method: 'post',
     data: data,
-  });
+  })
+}
+
+export function menuUpdate(data: any) {
+  return request({
+    url: '/menu/update',
+    method: 'post',
+    data: data,
+  })
+}
+export function menuDelete(data: any) {
+  return request({
+    url: '/menu/delete',
+    method: 'post',
+    data: data,
+  })
 }

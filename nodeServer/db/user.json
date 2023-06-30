@@ -51,7 +51,7 @@
     },
     {
       "id": 4,
-      "menuId": "200",
+      "menuId": 200,
       "pid": "-1",
       "title": "page",
       "icon": "win",

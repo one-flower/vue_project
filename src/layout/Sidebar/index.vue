@@ -5,16 +5,24 @@
       <el-menu router unique-opened :background-color="variables.menuColor" :text-color="variables.menuText"
         :active-text-color="variables.menuActiveText" size="large" :collapse="store.LayoutStore.silderStatus"
         :collapse-transition="false" :default-active="route.fullPath">
-        <el-sub-menu :index="item.path" v-for="item in store.UserStore.menuList" :key="item.menuId">
-          <template #title>
+        <template v-for="item in store.UserStore.menuList" :key="item.menuId">
+          <el-sub-menu :index="item.path" v-if="item.children && !item.redirect">
+            <template #title>
+              <el-icon>
+                <svg-icon :size="18" :icon="(item.meta?.icon as string)" />
+              </el-icon>
+              <span>{{ item.meta?.title }}</span>
+            </template>
+            <menu-item :basePath="item.path" :menuItemList="item.children">
+            </menu-item>
+          </el-sub-menu>
+          <el-menu-item :index="(item.path)" :route="(item.path)" v-else>
             <el-icon>
               <svg-icon :size="18" :icon="(item.meta?.icon as string)" />
             </el-icon>
-            <span>{{ item.meta?.title }}</span>
-          </template>
-          <menu-item :basePath="item.path" :menuItemList="item.children">
-          </menu-item>
-        </el-sub-menu>
+            <span style="padding-left: 10px;">{{ item.meta?.title }}</span>
+          </el-menu-item>
+        </template>
       </el-menu>
     </el-scrollbar>
   </div>
