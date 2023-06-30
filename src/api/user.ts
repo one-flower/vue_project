@@ -43,7 +43,7 @@ export function login(data: any) {
   })
 }
 
-export function menuQuery(data: any) {
+export function menuQuery(data: any = {}) {
   return request({
     url: '/menu/query',
     method: 'post',

@@ -1,7 +1,5 @@
 const { getDb, saveDb } = require('@db/index')
-const md5 = require('@util/md5')
 const { format } = require('@util/index')
-const { body } = require('express-validator')
 // 创建
 exports.add = async (req, res, next) => {
   try {
@@ -88,8 +86,14 @@ exports.query = async (req, res, next) => {
   try {
     let body = req.body
     const db = await getDb()
+    if (!body.title) {
+      delete body.title
+    }
+    if (!body.path) {
+      delete body.path
+    }
     const data = db.menu.filter(item => {
-      return (!item.title.indexOf(body.title) && !item.path.indexOf(body.path))
+      return (item.title.indexOf(body.title) && item.path.indexOf(body.path))
     })
     res.status(200).json({
       code: 200,

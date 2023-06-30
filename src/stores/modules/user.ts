@@ -66,8 +66,8 @@ export const UserStore = defineStore({
       return new Promise((resolve, reject) => {
         login(loginForm)
           .then((res) => {
-            console.log(res,'sss');
-            
+            console.log(res, 'sss')
+
             let data = res.data
             this.setToken(data.token)
             this.setAccount(data.account)
@@ -124,8 +124,7 @@ export const UserStore = defineStore({
               return item
             })
             let newRoute = handleTree(r, 'menuId', 'pid')
-            console.log(newRoute);
-            
+
             this.setMenu(newRoute)
             resolve(newRoute)
           })
