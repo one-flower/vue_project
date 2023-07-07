@@ -83,7 +83,6 @@
       </template>
     </el-dialog>
 
-    <loading></loading>
   </div>
 </template>
 <script setup lang="ts">
@@ -107,14 +106,13 @@ let tableData = reactive({
   result: <any[]>[]
 })
 
-
 const initTable = () => {
   menuQuery(searchObj).then(res => {
     // 添加菜单信息
     const modules = import.meta.glob('@/views/**/*.vue') //vue文件
     const svgModules = import.meta.glob('@assets/icon/**/*.svg') //svg文件 
     formObj.menuIdList = [{ value: -1, label: '根目录' }]
-      .concat(res.data.map((item: { menuId: number, title: string }) => {
+      .concat(res.map((item: { menuId: number, title: string }) => {
         return {
           value: item.menuId,
           label: item.title,
@@ -127,7 +125,7 @@ const initTable = () => {
       return item.replace('/src/views', '').replace('.vue', '')
     })
 
-    tableData.result = handleTree(res.data, 'menuId')
+    tableData.result = handleTree(res, 'menuId')
   })
 }
 initTable()
@@ -150,20 +148,22 @@ const onAdd = () => {
 
 const onEdit = (row: any) => {
   addDio.value = true
-  delete row.children
-  addForm.value = { ...row }
+  nextTick(() => {
+    // resetFields方法是将表单重置为form组件dom刚渲染时的初始值，所以dom加载后赋值，resetFields不会失效
+    addForm.value = { ...row }
+  })
 }
 const onDelete = (id: number) => {
-  menuDelete({ id: id }).then(res => {
+  menuDelete({ id: id }).then(() => {
     toast('操作成功')
     initTable()
   })
 }
 // 
 const onCancel = () => {
-  addDio.value = false
   const form = unref(addFormRef)
   form.resetFields()
+  addDio.value = false
 }
 //
 const onSubmit = async (addFormRef: FormInstance) => {
@@ -171,12 +171,12 @@ const onSubmit = async (addFormRef: FormInstance) => {
   await addFormRef.validate((valid, fields) => {
     if (valid) {
       if (addForm.value.id) {
-        menuUpdate(addForm.value).then(res => {
+        menuUpdate(addForm.value).then(() => {
           toast('操作成功')
           initTable()
         })
       } else {
-        menuAdd(addForm.value).then(res => {
+        menuAdd(addForm.value).then(() => {
           toast('操作成功')
           initTable()
         })

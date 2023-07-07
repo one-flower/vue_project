@@ -45,7 +45,7 @@
         <el-table-column label="状态" prop="status" align="center" width="80px" />
       </el-table>
       {{ searchObj }}
-      <pagiation v-model:page-no="searchObj.pageNo" v-model:page-num="searchObj.pageNum" @change="initTable"></pagiation>
+      <pagiation v-model:page-no="tableData.pageNo" v-model:page-num="tableData.pageNum" @change="initTable"></pagiation>
     </div>
   </div>
 </template>
@@ -66,25 +66,32 @@ const searchObj = reactive({
   url: '',
   model: undefined,
   status: undefined,
+
+})
+interface tableData {
+  pageNo: number
+  pageNum: number
+  total: number
+  result: any[]
+}
+let tableData: tableData = reactive({
   pageNo: 1,
   pageNum: 10,
   total: 0,
-})
-let tableData = reactive({
-  result: []
+  result: [],
 })
 
 const initTable = () => {
-  apiPage().then(res => {
-    tableData.result = res.data.result
-    searchObj.total = res.data.total
-    searchObj.pageNo = 1
+  apiPage().then((res: tableData) => {
+    tableData.result = res.result
+    tableData.total = res.total
+    tableData.pageNo = 1
   })
 }
 initTable()
 
 const onSearch = () => {
-  searchObj.pageNo = 1
+  tableData.pageNo = 1
   initTable()
 }
 

@@ -66,17 +66,14 @@ export const UserStore = defineStore({
       return new Promise((resolve, reject) => {
         login(loginForm)
           .then((res) => {
-            console.log(res, 'sss')
-
-            let data = res.data
-            this.setToken(data.token)
-            this.setAccount(data.account)
-            this.setName(data.name)
-            this.setHeadImg(data.headImg)
-            this.setSex(data.sex)
+            this.setToken(res.token)
+            this.setAccount(res.account)
+            this.setName(res.name)
+            this.setHeadImg(res.headImg)
+            this.setSex(res.sex)
             resolve(true)
           })
-          .catch((err) => {
+          .catch((err: any) => {
             console.log(err, 'err')
             reject(err)
           })
@@ -99,7 +96,7 @@ export const UserStore = defineStore({
     async menuInfo(): Promise<any[]> {
       return new Promise((resolve, reject) => {
         menuQuery()
-          .then((res) => {
+          .then(res => {
             const setComponent = (view: string) => {
               // 路由懒加载
               for (const path in modules) {
@@ -109,7 +106,7 @@ export const UserStore = defineStore({
                 }
               }
             }
-            let r = res.data.map((item: any) => {
+            let r = res.map((item: any) => {
               if (item.component) {
                 if (item.component === 'Layout') {
                   item.component = Layout
@@ -128,7 +125,7 @@ export const UserStore = defineStore({
             this.setMenu(newRoute)
             resolve(newRoute)
           })
-          .catch((err) => {
+          .catch((err: any) => {
             console.log(err, 'err')
             reject(err)
           })

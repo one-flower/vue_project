@@ -15,7 +15,7 @@ const zIndex = 3000
 const titleName = ref('')
 function changeIcon(icon: string) {
   let link: HTMLElement = document.getElementById('linkIcon') || document.createElement("link");
-  //@ts-ignore
+  // @ts-ignore
   link.href = icon
 }
 const changeHead = () => {

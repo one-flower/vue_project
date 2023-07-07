@@ -6,3 +6,10 @@
 //   }
 // }
 // export {}
+// axios 请求格式自定义
+import { AxiosRequestConfig } from "axios";
+declare module 'axios'{
+  interface AxiosInstance{
+    (config:AxiosRequestConfig):Promise<any>
+  }
+}

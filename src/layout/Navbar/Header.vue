@@ -80,8 +80,8 @@ const changeSize = (e: "" | "large" | "default" | "small") => {
 // 登出
 const loginOut = () => {
   UserStore.logout(
-  ).then(res => {
-  }).catch(err => {
+  ).then(() => {
+  }).catch(() => {
   })
 }
 
@@ -101,7 +101,7 @@ const matched = computed(() => {
   position: relative;
   background: #fff;
   border-bottom: 1px solid #e4e7ed;
-
+  box-sizing: border-box;
   &__sign {
     width: $logoHeight;
     height: $logoHeight;

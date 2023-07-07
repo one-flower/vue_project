@@ -46,7 +46,7 @@
       </div>
     </div>
     <div class="login-container__footer">
-      <p>中国-杭州  2023-06-01  开始划水.</p>
+      <p>中国-杭州 2023-06-01 开始划水.</p>
     </div>
   </div>
 </template>
@@ -79,7 +79,7 @@ const changePwd = () => {
 const imgBase = ref('')
 onMounted(() => {
   loginCode().then(res => {
-    imgBase.value = res.data
+    imgBase.value = res
   })
 })
 // 登录
@@ -92,7 +92,7 @@ const loginSubmit = async (refLoginForm: FormInstance) => {
   await refLoginForm.validate((valid, fields) => {
     if (valid) {
       loading.value = true
-      store.UserStore.login(loginForm).then(res => {
+      store.UserStore.login(loginForm).then(() => {
         toast('登录成功')
         router.replace('/');
       }).catch(err => {

@@ -8,6 +8,7 @@ import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import { viteMockServe } from "vite-plugin-mock";
+import viteVueDevtools from 'vite-plugin-vue-devtools';
 // import { visualizer } from "rollup-plugin-visualizer"; //build文件分析视图
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }: ConfigEnv) => {
@@ -74,6 +75,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
         // 默认开启响应性语法糖
         reactivityTransform: true,
       }),
+      viteVueDevtools(),
       createSvgIconsPlugin({
         iconDirs: [path.resolve(process.cwd(), "src/assets/icon")],
         symbolId: "[name]",

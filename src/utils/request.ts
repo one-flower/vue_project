@@ -5,6 +5,7 @@ import type {
   AxiosResponse,
 } from 'axios'
 import appStore from '@/stores'
+import load from '@/components/Loading/index';
 
 const request: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
@@ -72,36 +73,38 @@ request.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+// request;
 
 // 响应拦截
 request.interceptors.response.use(
-  (response: AxiosResponse) => {
+  (response: AxiosResponse): Promise<any> => {
     const { data } = response
-    
+    load.close()
     if (response.config.responseType === 'arraybuffer') {
       // 处理arraybuffer 为png图片
       const buffer: ArrayBuffer = data
       const dataArray: Uint8Array = new Uint8Array(buffer)
-      return Promise.resolve({
-        data:
-          'data:image/png;base64,' +
+
+      return Promise.resolve(
+        'data:image/png;base64,' +
           btoa(
             dataArray.reduce(
               (data, byte) => data + String.fromCharCode(byte),
               ''
             )
-          ),
-      })
+          )
+      )
     } else if (data.code === 200) {
-      return Promise.resolve(data)
+      return Promise.resolve(data.data)
     } else {
-      return Promise.reject(data || { data: '' })
+      return Promise.reject(data.data)
     }
   },
-  (error) => {
+  (error: string) => {
+    load.close()
     console.log('err' + error) // for debug
     if (error) {
-      return Promise.reject({ data: '' })
+      return Promise.reject(error)
     }
   }
 )
