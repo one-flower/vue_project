@@ -1,16 +1,21 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import { setupStore } from '@/stores';
+import { createApp } from "vue"
+
+import i18n from "@/locales"
+import App from "@/App.vue"
+import router from "@/router"
+import { setupStore } from "@/stores"
+
 // import { setupGlobDirectives } from '@/directives';
 
-import '@/styles/index.scss'
-import 'element-plus/theme-chalk/el-message.css'
-import 'element-plus/theme-chalk/el-message-box.css'
-import 'virtual:svg-icons-register' //svg
+import "@/styles/index.scss"
+import "element-plus/theme-chalk/el-message.css"
+import "element-plus/theme-chalk/el-message-box.css"
+import "virtual:svg-icons-register" //svg
 
 const app = createApp(App)
-app.use(router)
+
+app.use(router).use(i18n)
+
 // 注册pinia
 setupStore(app)
 // 自定义指令
@@ -19,4 +24,4 @@ setupStore(app)
 // app.config.errorHandler = (err) => {
 //   console.log("err", err);
 // };
-app.mount('#app')
+app.mount("#app")

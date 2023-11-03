@@ -1,5 +1,4 @@
 #app {
-
   // 侧边导航栏样式
   .sidebar-container {
     transition: width 0.5s;
@@ -16,7 +15,10 @@
 
     // reset element-ui css  折叠面板过渡动画
     .horizontal-collapse-transition {
-      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+      transition:
+        0s width ease-in-out,
+        0s padding-left ease-in-out,
+        0s padding-right ease-in-out;
     }
 
     // 滚动条
@@ -58,20 +60,19 @@
     .main-container {
       margin-left: $hideWidth;
 
-      .navbar-container {
-        width: calc(100% - $hideWidth) !important;
-      }
+      // .navbar-container {
+      //   width: 100% !important;
+      // }
     }
-
   }
 
   // 右侧内容
   .main-container {
     height: 100%;
-    transition: margin-left .5s;
+    transition: margin-left 0.5s;
     margin-left: $sideBarWidth;
     position: relative;
-    .appmain-container{
+    .appmain-container {
       height: calc(100% - $logoHeight - $tabsHeight);
     }
   }
@@ -79,5 +80,4 @@
   .el-menu--collapse .el-menu .el-submenu {
     min-width: $sideBarWidth !important;
   }
-
 }

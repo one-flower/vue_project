@@ -1,13 +1,11 @@
 <template>
   <div>
     <Header></Header>
-    <Tabs class="navTabs"></Tabs>
   </div>
 </template>
-    
+
 <script setup lang="ts">
-import Header from './Header.vue'
-import Tabs from './Tabs.vue'
+import Header from "./Header/index.vue"
 </script>
 
 <style scoped lang="scss">

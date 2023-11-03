@@ -1,12 +1,12 @@
 <template>
-   <div>
-    <div class="box1">{{ '1定位z-index < 0' }} </div>
+  <div>
+    <div class="box1">{{ "1定位z-index < 0" }}</div>
     <div class="box2">2块级元素</div>
     <div class="box3">3浮动</div>
     <div class="box4">4行内元素</div>
     <div class="box5">5定位z-index=0</div>
     <div class="box6">6定位z-index>0</div>
-   </div>
+  </div>
 </template>
 <style scoped lang="scss">
 div {
@@ -53,6 +53,6 @@ div {
   z-index: 1;
   left: 250px;
   top: -100px;
-  background: gold
+  background: gold;
 }
 </style>

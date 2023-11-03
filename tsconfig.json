@@ -10,22 +10,20 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "types": [
-      "node",
-      "element-plus/global"
-    ],
+    "types": ["node", "webpack-env", "element-plus/global"],
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "",
     "paths": {
       // 用于设置模块名到基于baseUrl的路径映射
-      "@/*": [
-        "src/*"
-      ],
-      "@com/*": [
-        "src/components/*"
-      ]
-    }
+      "@/*": ["src/*"],
+      "@comp/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"],
+      "@router/*": ["src/router/*"],
+      "@views/*": ["src/views/*"],
+      "@locales/*": ["src/locales/*"]
+    },
+    "allowSyntheticDefaultImports": true //允许从没有设置默认导出的模块中默认导入
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -1,8 +1,12 @@
 <template>
   <div :class="{ play: isPlay }">
     <ul class="flip">
-      <li class="item" v-for="(item, key) in maxNum + 1" :class="{ active: time === key, before: beforeTime === key }"
-        :key="item">
+      <li
+        class="item"
+        v-for="(item, key) in maxNum + 1"
+        :class="{ active: time === key, before: beforeTime === key }"
+        :key="item"
+      >
         <div class="up">
           <div class="shadow"></div>
           <div class="inn">{{ key }}</div>
@@ -17,26 +21,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch } from "vue"
 const isPlay = ref(false)
 const time = ref(0)
 const beforeTime = ref(0)
 
 const props = defineProps({
-  maxNum: { //最大渲染数
+  maxNum: {
+    //最大渲染数
     type: Number,
     default: 9,
   },
-  num: { //显示num
+  num: {
+    //显示num
     type: Number,
     default: 0,
-    required: true
-  }
+    required: true,
+  },
 })
-watch(() =>
-  props.num,
+watch(
+  () => props.num,
   (newVal, oldVal) => {
-    isPlay.value = newVal <= props.maxNum 
+    isPlay.value = newVal <= props.maxNum
     time.value = newVal
     beforeTime.value = oldVal
   },
@@ -95,7 +101,7 @@ $radius: 6px;
       top: 0;
 
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         top: calc(($height - $lineWidth) / 2);
         left: 0;

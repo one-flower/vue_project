@@ -1,63 +1,34 @@
-import { defineStore } from 'pinia'
+import { Language } from "element-plus/es/locale"
+import { defineStore } from "pinia"
 interface LayoutStore {
-  elSize: '' | 'large' | 'default' | 'small'
+  elSize: "" | "large" | "default" | "small"
   silderStatus: boolean
-  navIndex: number
-  navList: any[]
+  language: string
 }
 
-export const LayoutStore = defineStore({
-  id: 'layout',
+const Layout = defineStore({
+  id: "layout",
   state: (): LayoutStore => ({
-    elSize: 'default',
+    elSize: "default",
     silderStatus: false,
-    navIndex: 0,
-    navList: [
-      {
-        fullPath: '/home',
-        meta: {
-          title: '主页',
-        },
-        path: '/home',
-        query: {},
-        params: {},
-      },
-    ],
+    language: "zhCn",
   }),
   getters: {},
   actions: {
     // 更改尺寸
-    changeSize(e: '' | 'large' | 'default' | 'small') {
+    setSize(e: "" | "large" | "default" | "small") {
       this.elSize = e
     },
     // aside 伸缩
     changeAsideStatus() {
       this.silderStatus = !this.silderStatus
     },
-    setNavIndex(index: number) {
-      this.navIndex = index
+    // 语言
+    setLanguage(e: string) {
+      this.language = e
     },
-    // nav 中 tag导航块
-    setNavList(route: any) {
-      // if (this.navList?.length === 0) {
-      //   this.navList.push(route)
-      //   this.setNavIndex(0)
-      // } else {
-      let arr = this.navList.map((item) => {
-        return item.fullPath
-      })
-
-      if (!arr.includes(route.fullPath)) {
-        this.navList.push(route)
-        this.setNavIndex(arr.length)
-      } else {
-        this.setNavIndex(arr.findIndex((item) => item === route.fullPath))
-      }
-      // }
-    },
-    removeNavList(routeIndex: number) {
-      this.navList.splice(routeIndex, 1)
-      this.navIndex = routeIndex
+    getLanguage() {
+      return this.language
     },
   },
   persist: {
@@ -67,8 +38,10 @@ export const LayoutStore = defineStore({
     strategies: [
       {
         storage: sessionStorage,
-        paths: ['elSize', 'silderStatus', 'navIndex', 'navList'],
+        paths: ["elSize", "silderStatus"],
       },
     ],
   },
 })
+
+export default Layout

@@ -1,37 +1,17 @@
 <template>
-  <el-config-provider :size="LayoutStore.elSize" :z-index="zIndex" :locale="zhCn">
+  <el-config-provider :size="LayoutStore().elSize" :z-index="3000" :locale="local">
     <router-view />
   </el-config-provider>
 </template>
 
-
 <script lang="ts" setup>
-import appStore from '@/stores'
-import zhCn from 'element-plus/lib/locale/lang/zh-cn'
-const { LayoutStore } = appStore()
-const zIndex = 3000
+import { LayoutStore } from "@/stores"
+import { messages } from "./locales"
+console.log(messages)
 
-// 切换head信息
-const titleName = ref('')
-function changeIcon(icon: string) {
-  let link: HTMLElement = document.getElementById('linkIcon') || document.createElement("link");
+// const { LayoutStore } = appStore()
+const local = computed(() => {
   // @ts-ignore
-  link.href = icon
-}
-const changeHead = () => {
-  if (document.visibilityState === "hidden") {
-    titleName.value = document.title;
-    document.title = "你快回来~~~";
-    changeIcon('/cry.svg')
-  } else {
-    document.title = titleName.value;
-    changeIcon('/default.svg')
-  }
-
-}
-window.addEventListener("visibilitychange", changeHead, false);
-// 注销事件
-onUnmounted(() => {
-  document.removeEventListener("visibilitychange", changeHead)
+  return messages[LayoutStore().language]
 })
 </script>

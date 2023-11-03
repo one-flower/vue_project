@@ -1,21 +1,19 @@
 <template>
   <div class="loaidngConainer" v-show="props.show">
     <div class="main">
-      <img src="@assets/default_images/loading.png">
+      <img src="@assets/default_images/loading.png" />
       <div class="text">{{ props.tip?.value }}</div>
     </div>
-
   </div>
 </template>
 <script setup lang="ts">
-
 const props = defineProps({
   show: {
     type: Object,
   },
   tip: {
     type: Object,
-  }
+  },
 })
 </script>
 <style scoped lang="scss">
@@ -55,11 +53,11 @@ const props = defineProps({
 
 @keyframes loading {
   from {
-    transform: rotate(0deg)
+    transform: rotate(0deg);
   }
 
   to {
-    transform: rotate(360deg)
+    transform: rotate(360deg);
   }
 }
 </style>

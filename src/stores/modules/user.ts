@@ -1,34 +1,26 @@
-import { defineStore } from 'pinia'
-import { login, menuQuery } from '@/api/user'
-import router from '@/router'
-import Layout from '@/layout/index.vue'
-const modules = import.meta.glob('@/views/**/*.vue') //匹配views文件
-import { handleTree } from '@/utils/index'
+import { defineStore } from "pinia"
+import { login } from "@/api/sys/user"
 
 interface loginForm {
   username: string
   password: string
-  code: string
+  // code: string
 }
 
 interface UserState {
-  token: string
   account: string
   name: string
-  headImg: string
-  sex: number
-  menuList: any[]
+  avatarUrl: string
+  token: string
 }
 
-export const UserStore = defineStore({
-  id: 'user',
+const User = defineStore({
+  id: "user",
   state: (): UserState => ({
-    token: '',
-    account: '',
-    name: '',
-    headImg: '',
-    sex: 0,
-    menuList: [],
+    account: "",
+    name: "",
+    avatarUrl: "",
+    token: "",
   }),
   getters: {
     getToken(): string {
@@ -36,8 +28,8 @@ export const UserStore = defineStore({
     },
   },
   actions: {
-    setToken(info: string) {
-      this.token = info
+    reset() {
+      this.$reset()
     },
     setAccount(account: string) {
       this.account = account
@@ -45,90 +37,42 @@ export const UserStore = defineStore({
     setName(name: string) {
       this.name = name
     },
-    setHeadImg(headImg: string) {
-      this.headImg = headImg
+    setavatarUrl(avatarUrl: string) {
+      this.avatarUrl = avatarUrl
     },
-    setSex(sex: number) {
-      this.sex = sex
+    setToken(token: string) {
+      this.token = token
     },
-    setMenu(menuList: any[]) {
-      this.menuList = menuList
-    },
-    resetState() {
-      this.token = ''
-    },
-
     /**
      * @description: 登录
-     * @param {loginForm} loginForm username password code
+     * @param {loginForm} loginForm username password
+     *
      */
     async login(loginForm: loginForm): Promise<any> {
       return new Promise((resolve, reject) => {
         login(loginForm)
-          .then((res) => {
-            this.setToken(res.token)
+          .then((res: UserState) => {
             this.setAccount(res.account)
             this.setName(res.name)
-            this.setHeadImg(res.headImg)
-            this.setSex(res.sex)
+            this.setavatarUrl(res.avatarUrl)
+            this.setToken(res.token)
             resolve(true)
           })
           .catch((err: any) => {
-            console.log(err, 'err')
+            console.log(err, "err")
             reject(err)
           })
       })
     },
-
     /**
      * @description: 登出
      */
-    async logout() {
-      this.resetState()
-      router.replace('/login')
-      // 路由表重置
-      location.reload()
-    },
-
-    /**
-     * @description: 获取菜单信息
-     */
-    async menuInfo(): Promise<any[]> {
-      return new Promise((resolve, reject) => {
-        menuQuery()
-          .then(res => {
-            const setComponent = (view: string) => {
-              // 路由懒加载
-              for (const path in modules) {
-                const dir = path.split('views')[1].split('.vue')[0]
-                if (dir === view) {
-                  return () => modules[path]()
-                }
-              }
-            }
-            let r = res.map((item: any) => {
-              if (item.component) {
-                if (item.component === 'Layout') {
-                  item.component = Layout
-                } else {
-                  item.component = setComponent(item.component) // 导入组件
-                }
-              }
-              item.meta = {
-                title: item.title,
-                icon: item.icon,
-              }
-              return item
-            })
-            let newRoute = handleTree(r, 'menuId', 'pid')
-
-            this.setMenu(newRoute)
-            resolve(newRoute)
-          })
-          .catch((err: any) => {
-            console.log(err, 'err')
-            reject(err)
-          })
+    async logout(): Promise<boolean> {
+      return new Promise(resolve => {
+        this.$reset()
+        // 路由表重置
+        location.href = "/login"
+        resolve(true)
       })
     },
   },
@@ -138,9 +82,10 @@ export const UserStore = defineStore({
     // 选择存储方式和内容
     strategies: [
       {
-        storage: localStorage,
-        paths: ['token', 'account', 'name', 'headImg', 'sex'],
+        storage: sessionStorage,
+        paths: ["account", "name", "avatarUrl", "token"],
       },
     ],
   },
 })
+export default User

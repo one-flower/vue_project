@@ -32,7 +32,6 @@ const value = ref(0)
     transform: rotate(120deg);
     left: 560px;
     top: 600px;
-
   }
 }
 </style>

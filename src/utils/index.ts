@@ -1,24 +1,28 @@
 const handleTree = (
   list: any[],
-  idStr: string = 'id',
-  pidStr: string = 'pid',
-  childrenStr: string = 'children'
-) => {
-  let arr = list
-  let id: string = idStr
-  let pid: string = pidStr
-  let children: string = childrenStr
-  let endList: any[] = []
-  let obj: any = {}
-  list.forEach((item) => {
-    obj[item[id]] = item
+  idStr: string = "id",
+  pidStr: string = "pid",
+  childrenStr: string = "children",
+): any[] => {
+  const id: string = idStr.trim()
+  const pid: string = pidStr.trim()
+  const children: string = childrenStr.trim()
+  const endList: any[] = []
+  const obj: any = {}
+  const startList: any[] = []
+
+  // 除去无用的顶级父类，放入obj
+  list.map(item => {
+    if (item[id] !== -1) {
+      obj[item[id]] = item
+      startList.push(item)
+    }
   })
 
-  list.forEach((item) => {
-    let fObj = obj[item[pid]]
+  startList.forEach(item => {
+    const fObj = obj[item[pid]]
     if (fObj) {
-      !fObj[children] && (fObj[children] = [])
-      fObj[children].push(item)
+      ;(fObj[children] || (fObj[children] = [])).push(item)
     } else {
       endList.push(item)
     }

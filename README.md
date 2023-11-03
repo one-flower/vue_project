@@ -1,16 +1,62 @@
-# Vue 3 + TypeScript + Vite
+# 描述
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+B端后台管理系统
 
-## Recommended IDE Setup
+# 项目文件
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- [git地址]()
+- [接口文档]()
+- [前端代码规范]()
 
-## Type Support For `.vue` Imports in TS
+# 构建
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+- [vue3中文官网](https://cn.vuejs.org/)
+- [pinia中文官网](https://pinia.web3doc.top/)
+- [typescript中文官网](http://typescript.p2hp.com/)
+- [vite中文官网](https://cn.vitejs.dev/)
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+# 运行
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+```bash
+# 克隆项目
+git clone https://github.com/xxxx.git
+
+# 进入项目
+cd web-pc
+
+# 安装依赖
+npm install
+
+# 运行
+npm run dev
+
+# 打包
+npm run build:dev
+npm run build:prod
+```
+
+# 项目结构
+
+```bash
+├── build                   # 构建相关
+├── mock                    # 本地模拟数据
+├── public                  # 静态资源
+├── src                     # 源代码
+│   ├── api                 # 所有请求
+│   ├── assets              # 静态资源
+│   ├── components          # 全局公用组件
+│   ├── directives          # 全局公用指令
+│   ├── hooks               # 全局公用方法
+│   ├── layout              # 全局公用布局
+│   ├── router              # 路由
+│   ├── store               # 全局公用状态管理
+│   ├── styles              # 全局公用样式
+│   ├── types               # 全局公用类型
+│   ├── utils               # 全局公用工具
+│   ├── views               # 所有页面
+│   ├── App.vue             # 入口页面
+│   └── main.ts             # 入口文件
+├── tsconfig.json           # ts配置文件
+├── vue.config.js           # vue配置文件
+└── package.json            # package.json
+```

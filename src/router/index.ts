@@ -1,96 +1,83 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+import { createRouter, createWebHistory } from "vue-router"
+import type { RouteRecordRaw } from "vue-router"
+import NProgress from "nprogress"
+import "nprogress/nprogress.css"
 
-import appStore from '@/stores'
+import { UserStore } from "@/stores"
+import { storeRoutes } from "./storeMenu"
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/login',
-    name: 'login',
-    menuId: 1,
+    path: "/login",
+    name: "login",
     meta: {
-      title: '登录',
-      icon: 'vue',
+      title: "登录",
+      icon: "vue",
     },
-    component: () => import('@/views/login/index.vue'),
+    component: () => import("@/layout/login/index.vue"),
   },
-  {
-    path: '/',
-    menuId: 2,
-    component: () => import('@/layout/index.vue'),
-    redirect: '/home',
-    children: [
-      {
-        path: 'home',
-        menuId: 3,
-        meta: {
-          title: '主页',
-        },
-        component: () => import('@/views/home.vue'),
-      },
-    ],
-  },
-  {
-    path: '/:catchAll(.*)',
-    menuId: 4,
-    component: () => import('@/views/404.vue'),
-  },
+
+  // {
+  //   path: '/:catchAll(.*)',
+  //   name: '404',
+  //   menuId: 4,
+  //   component: () => import('@/404.vue'),
+  // },
 ]
 
 const router = createRouter({
-  routes: routes,
   history: createWebHistory(import.meta.env.VITE_ROUTER_NAME),
+  routes: routes.concat(storeRoutes),
 })
 
 // 全局前置导航守卫
 router.beforeEach(async (to, from, next) => {
-  const { UserStore, LayoutStore } = appStore()
   NProgress.start()
   // 白名单
-  const wihteList = ['/login']
+  const wihteList = ["/login"]
   // 无token且不属于白名单。 返回login页面
-  if (UserStore.token) {
+  if (UserStore().token) {
     //登录
-    if (to.path === '/login') {
-      next({ path: '/' })
+    if (to.path === "/login") {
+      next({ path: "/" })
     } else {
-      if (UserStore.menuList.length === 0) {
-        // 重新请求路由
-        let menuData = await UserStore.menuInfo()
-        menuData.forEach((item) => {
-          router.addRoute(item)
-        })
-        // 最后添加 404
-        router.addRoute({
-          path: '/:catchAll(.*)',
-          name: '404',
-          menuId: 4,
-          component: () => import('@/views/404.vue'),
-        })
-
-        next({ ...to, replace: true })
-      } else {
-        console.log(LayoutStore.navList);
-        
-        next()
-        if (to.name !== '404') LayoutStore.setNavList(to)
-      }
+      // if (UserStore.menuList.length === 0) {
+      // 重新请求路由
+      // try {
+      // 动态路由注册
+      // const menuData = await UserStore.menuInfo()
+      // menuData.forEach(item => {
+      //   router.addRoute(item)
+      // })
+      // 最后添加 404
+      router.addRoute({
+        path: "/:catchAll(.*)",
+        name: "404",
+        component: () => import("@/404.vue"),
+      })
+      // } catch (error) {
+      //   console.log("router", error)
+      //   next("/login")
+      // }
+      // next({ ...to, replace: true })
+      // } else {
+      next()
+      // }
     }
   } else {
     // 未登录
     if (wihteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      next('/login')
+      next("/login")
+      NProgress.done()
     }
   }
 })
 
 // 全局后置导航
-router.afterEach((to) => {
-  document.title = `${to.meta.title || ''}-${import.meta.env.VITE_TITLE}`
+router.afterEach(to => {
+  document.title = `${to.meta.title || ""}-${import.meta.env.VITE_TITLE}`
   NProgress.done()
 })
 

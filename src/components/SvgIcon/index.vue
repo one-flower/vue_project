@@ -1,23 +1,29 @@
 <template>
-  <div 
-    v-if="isOnlineSvg" 
-    :style="{ 
-      '--svg-icon-url': `url(${icon})`, 
-      '--size': `${size ? size + 'px' : '1rem'}`, 
-    }"
-    class="svg-icon svg-icon-online"
-    :class="className"
-  />
-  <svg 
-    v-else class="svg-icon"
-    :style="{ 
-      '--size': `${size ? size + 'px' : '1rem'}`, 
-    }"
-    :class="className"
-    aria-hidden="true"
-  >
-    <use :xlink:href="`#${icon}`"/>
-  </svg>
+  <div class="svg-container">
+    <!-- 在线图片 -->
+    <img
+      v-if="isOnlineSvg"
+      :style="{
+        '--size': `${size}`,
+      }"
+      class="svg-icon"
+      :class="className"
+      :src="icon"
+    />
+    <!-- '--svg-icon-url': `url(${icon})`,  svg-icon-online -->
+    <!-- svg -->
+    <svg
+      v-else
+      class="svg-icon"
+      :style="{
+        '--size': `${size}`,
+      }"
+      :class="className"
+      aria-hidden="true"
+    >
+      <use :xlink:href="`#${icon}`" />
+    </svg>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -25,16 +31,17 @@ const props = defineProps({
   // SVG 图标名称或在线URL
   icon: {
     type: String,
-    default: 'vue'
+    default: "vue",
     // required: true
   },
   // 图标类名
   className: {
     type: String,
-    default: ''
+    default: "",
   },
   size: {
-    type: Number,
+    type: String,
+    default: "1rem",
   },
 })
 
@@ -42,20 +49,24 @@ const isOnlineSvg = computed(() => /^(https?:)/.test(props.icon))
 </script>
 
 <style scoped lang="scss">
+.svg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .svg-icon {
   width: var(--size);
   height: var(--size);
   fill: currentColor;
   overflow: hidden;
-  vertical-align: middle;
 }
 
-.svg-icon-online {
-  background-color: currentColor;
-  mask-image: var(--svg-icon-url);
-  -webkit-mask-image: var(--svg-icon-url);
-  mask-size: cover;
-  -webkit-mask-size: cover;
-  display: inline-block;
-}
+// .svg-icon-online {
+//   background-color: currentColor;
+//   mask-image: var(--svg-icon-url) no-repeat 50% 50%;
+//   -webkit-mask-image: var(--svg-icon-url) no-repeat 50% 50%;
+//   mask-size: cover;
+//   -webkit-mask-size: cover;
+//   display: inline-block;
+// }
 </style>

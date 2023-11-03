@@ -2,25 +2,34 @@
   <div class="aside-container">
     <Logo></Logo>
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu router unique-opened :background-color="variables.menuColor" :text-color="variables.menuText"
-        :active-text-color="variables.menuActiveText" size="large" :collapse="store.LayoutStore.silderStatus"
-        :collapse-transition="false" :default-active="route.fullPath">
-        <template v-for="item in store.UserStore.menuList" :key="item.menuId">
+      <el-menu
+        router
+        unique-opened
+        :background-color="variables.menuColor"
+        :text-color="variables.menuText"
+        :active-text-color="variables.menuActiveText"
+        size="large"
+        :collapse="LayoutStore().silderStatus"
+        :collapse-transition="false"
+        :default-active="route.fullPath"
+      >
+        <template v-for="item in storeRoutes" :key="item.menuId">
+          <!-- 多级菜单 -->
           <el-sub-menu :index="item.path" v-if="item.children && !item.redirect">
             <template #title>
               <el-icon>
-                <svg-icon :size="18" :icon="(item.meta?.icon as string)" />
+                <svg-icon size="18px" :icon="item.meta?.icon as string" />
               </el-icon>
               <span>{{ item.meta?.title }}</span>
             </template>
-            <menu-item :basePath="item.path" :menuItemList="item.children">
-            </menu-item>
+            <menu-item :basePath="item.path" :menuItemList="item.children"></menu-item>
           </el-sub-menu>
-          <el-menu-item :index="(item.path)" :route="(item.path)" v-else>
+          <!-- 单菜单 -->
+          <el-menu-item :index="item.path" :route="item.path" v-else>
             <el-icon>
-              <svg-icon :size="18" :icon="(item.meta?.icon as string)" />
+              <svg-icon size="18px" :icon="item.meta?.icon"></svg-icon>
             </el-icon>
-            <span style="padding-left: 10px;">{{ item.meta?.title }}</span>
+            <span>{{ item.meta?.title }}</span>
           </el-menu-item>
         </template>
       </el-menu>
@@ -29,20 +38,20 @@
 </template>
 
 <script setup lang="ts">
-import variables from '@/styles/variables.module.scss'
-import Logo from './logo.vue';
-import MenuItem from './menu-item.vue';
-import appStore from '@/stores'
-import { useRoute } from 'vue-router';
+import variables from "@/styles/variables.module.scss"
 
-const store = appStore()
+import { LayoutStore } from "@/stores"
+import Logo from "./logo.vue"
+import { storeRoutes } from "@router/storeMenu"
+
+import MenuItem from "./menu-item.vue"
+
 const route = useRoute()
-
 </script>
 
 <style lang="scss" scoped>
 .aside-container {
-  background-color: $menuColor ;
+  background-color: $menuColor;
 
   &__menu {
     width: 100%;
