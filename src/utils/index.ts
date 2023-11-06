@@ -7,7 +7,7 @@ interface OptionTree {
  * @desc 递归父子关系数数组
  * @param { any[] } list 数据源
  * @param { OptionTree } optionTree 配置项 id pid children
- * @returns { Array } any[]
+ * @returns { Array } any[] 处理后的数组
  */
 const handleTree = (list: any[], optionTree: OptionTree = {}): any[] => {
   const { id = "id", pid = "pid", children = "children" } = optionTree

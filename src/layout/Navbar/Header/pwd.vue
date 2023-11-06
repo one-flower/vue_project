@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { psdUpdate } from "@/api/sys/user"
-import { toast } from "@/utils/tips"
+import { toast } from "@/utils/tip.js"
 import { vPwd } from "@/utils/verify"
 import type { FormRules, FormInstance } from "element-plus/es"
 

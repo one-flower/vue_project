@@ -2,7 +2,7 @@ import axios from "axios"
 import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from "axios"
 import { UserStore, LayoutStore } from "@/stores"
 import load from "@/components/Loading/index"
-import { toast } from "./tips"
+import { toast } from "./tip"
 
 const request: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,

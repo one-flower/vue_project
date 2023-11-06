@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { toast } from "@/utils/tips"
+import { toast, toastBox } from "@/utils/tip.js"
 import { FormInstance } from "element-plus"
 import { i18n } from "@/locales"
 
@@ -64,6 +64,7 @@ const searchObj = reactive({
 
 const onSearch = () => {
   toast.success(t("tips.success"))
+  toastBox("success", {})
 }
 
 const tableData = reactive<TablePage>({

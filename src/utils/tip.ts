@@ -1,5 +1,9 @@
 type msgType = "success" | "warning" | "error" | "info"
 
+/**
+ * @desc el消息提示
+ * @met
+ */
 class Toast {
   static duration: number = 3000
   static showClose: boolean = false
@@ -27,29 +31,33 @@ class Toast {
 /**
  * @desc el提示
  * @param {string} msg 提示信息
+ * @method success 成功
+ * @method warning 警告
+ * @method error 错误
+ * @method info 提示
  */
 export const toast = new Toast()
+
+interface BoxOption {
+  title?: string
+  type?: msgType
+  confirmText?: string
+  cancelText?: string
+}
 
 /**
  * @desc el confirm确认框
  * @param {string} content 内容
- * @param {string} title 标题
- * @param {msgType} type 类型
- * @param {string} confirmButtonText 确认text
- * @param {string} cancelButtonText 取消text
+ * @param {boxOption} boxOption title 标题 type 类型 confirmText 确认按钮文字 cancelText 取消按钮文字
  * @returns Promise<boolean>
  */
-export function confirm(
-  content: string = "",
-  title: string = "提示",
-  type: msgType = "warning",
-  confirmButtonText: string = "确认",
-  cancelButtonText: string = "取消",
-): Promise<boolean> {
+export function toastBox(content: string = "", boxOption: BoxOption = {}): Promise<boolean> {
+  const { title = "提示", type = "warning", confirmText = "确认", cancelText = "取消" } = boxOption
+
   return new Promise((resolve, reject) => {
     ElMessageBox.confirm(content, title, {
-      confirmButtonText: confirmButtonText,
-      cancelButtonText: cancelButtonText,
+      confirmButtonText: confirmText,
+      cancelButtonText: cancelText,
       type: type,
     })
       .then(() => {

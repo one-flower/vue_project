@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { UploadRequestOptions } from "element-plus/es"
-import { toast } from "@/utils/tips"
+import { toast } from "@/utils/tip.js"
 import { imgUpload } from "@/api/common"
 
 const props = defineProps({

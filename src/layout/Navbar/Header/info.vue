@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import type { FormRules, FormInstance } from "element-plus/es"
 import { UserStore } from "@/stores"
-import { toast } from "@/utils/tips"
+import { toast } from "@/utils/tip.js"
 import { vPhone } from "@/utils/verify"
 
 interface FormDate {

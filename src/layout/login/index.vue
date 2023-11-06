@@ -88,7 +88,7 @@
 import type { FormRules, FormInstance } from "element-plus/es"
 import { vPwd } from "@/utils/verify"
 import { UserStore } from "@/stores"
-import { toast } from "@/utils/tips"
+import { toast } from "@/utils/tip.js"
 
 const loading = ref(false)
 let pwdType = ref("password")
