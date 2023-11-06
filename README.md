@@ -48,8 +48,9 @@ npm run build:prod
 │   ├── directives          # 全局公用指令
 │   ├── hooks               # 全局公用方法
 │   ├── layout              # 全局公用布局
+│   ├── locales             # 国际化配置
 │   ├── router              # 路由
-│   ├── store               # 全局公用状态管理
+│   ├── stores              # 全局公用状态管理
 │   ├── styles              # 全局公用样式
 │   ├── types               # 全局公用类型
 │   ├── utils               # 全局公用工具

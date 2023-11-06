@@ -1,5 +1,8 @@
 import { defineStore } from "pinia"
 import { login } from "@/api/sys/user"
+import { menuQuery } from "@/api/sys/menu"
+import Layout from "@/layout/index.vue"
+import { handleTree } from "@/utils"
 
 interface loginForm {
   username: string
@@ -12,6 +15,7 @@ interface UserState {
   name: string
   avatarUrl: string
   token: string
+  menuList: any[]
 }
 
 const User = defineStore({
@@ -21,6 +25,7 @@ const User = defineStore({
     name: "",
     avatarUrl: "",
     token: "",
+    menuList: [],
   }),
   getters: {
     getToken(): string {
@@ -42,6 +47,9 @@ const User = defineStore({
     },
     setToken(token: string) {
       this.token = token
+    },
+    setMenu(menuList: any[]) {
+      this.menuList = menuList
     },
     /**
      * @description: 登录
@@ -73,6 +81,49 @@ const User = defineStore({
         // 路由表重置
         location.href = "/login"
         resolve(true)
+      })
+    },
+    /**
+     * @description: 获取菜单信息
+     */
+    async menuInfo(): Promise<any[]> {
+      return new Promise((resolve, reject) => {
+        menuQuery({})
+          .then(res => {
+            const modules = import.meta.glob("@/views/**/*.vue") //匹配views文件
+            const setComponent = (view: string) => {
+              // 路由懒加载
+              for (const path in modules) {
+                const dir = path.split("views")[1].split(".vue")[0]
+                if (dir === view) {
+                  return () => modules[path]()
+                }
+              }
+            }
+
+            const routeList = res.map((item: any) => {
+              if (item.component) {
+                if (item.component === "Layout") {
+                  item.component = Layout
+                } else {
+                  item.component = setComponent(item.component) // 导入组件
+                }
+              }
+              item.meta = {
+                title: item.title,
+                icon: item.icon,
+              }
+              return item
+            })
+            const newRoute = handleTree(routeList, { id: "menuId" })
+
+            this.setMenu(newRoute)
+            resolve(newRoute)
+          })
+          .catch(err => {
+            console.log(err, "err")
+            reject(err)
+          })
       })
     },
   },

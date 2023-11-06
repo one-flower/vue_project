@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly VITE_BASE_API: string //api前缀
   readonly VITE_BASE_URL: string //url代理
   readonly VITE_TITLE: string //名称
+  readonly VITE_LANGUANGE: string //语言
 }
 
 declare module "*.vue" {

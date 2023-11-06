@@ -1,6 +1,6 @@
 export default {
-  id: "en",
-  name: "english",
+  value: "en",
+  label: "english",
   buttons: {
     login: "Login",
   },

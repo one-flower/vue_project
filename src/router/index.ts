@@ -4,7 +4,6 @@ import NProgress from "nprogress"
 import "nprogress/nprogress.css"
 
 import { UserStore } from "@/stores"
-import { storeRoutes } from "./storeMenu"
 
 const routes: RouteRecordRaw[] = [
   {
@@ -27,11 +26,11 @@ const routes: RouteRecordRaw[] = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_ROUTER_NAME),
-  routes: routes.concat(storeRoutes),
+  routes: routes,
 })
 
 // 全局前置导航守卫
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to: any, from: any, next: any) => {
   NProgress.start()
   // 白名单
   const wihteList = ["/login"]
@@ -41,28 +40,29 @@ router.beforeEach(async (to, from, next) => {
     if (to.path === "/login") {
       next({ path: "/" })
     } else {
-      // if (UserStore.menuList.length === 0) {
-      // 重新请求路由
-      // try {
-      // 动态路由注册
-      // const menuData = await UserStore.menuInfo()
-      // menuData.forEach(item => {
-      //   router.addRoute(item)
-      // })
-      // 最后添加 404
-      router.addRoute({
-        path: "/:catchAll(.*)",
-        name: "404",
-        component: () => import("@/404.vue"),
-      })
-      // } catch (error) {
-      //   console.log("router", error)
-      //   next("/login")
-      // }
-      // next({ ...to, replace: true })
-      // } else {
-      next()
-      // }
+      if (UserStore().menuList.length === 0) {
+        // 重新请求路由
+        try {
+          // 动态路由注册
+          const menuData = await UserStore().menuInfo()
+          menuData.forEach(item => {
+            router.addRoute(item)
+          })
+          // 最后添加 404
+          router.addRoute({
+            path: "/:catchAll(.*)",
+            name: "404",
+            menuId: 4,
+            component: () => import("@/404.vue"),
+          })
+        } catch (error) {
+          console.log("router", error)
+          next("/login")
+        }
+        next({ ...to, replace: true })
+      } else {
+        next()
+      }
     }
   } else {
     // 未登录
@@ -76,7 +76,7 @@ router.beforeEach(async (to, from, next) => {
 })
 
 // 全局后置导航
-router.afterEach(to => {
+router.afterEach((to: any) => {
   document.title = `${to.meta.title || ""}-${import.meta.env.VITE_TITLE}`
   NProgress.done()
 })

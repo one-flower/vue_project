@@ -15,7 +15,7 @@
       </el-breadcrumb>
     </div>
     <div class="navHeader__menu">
-      <div class="navHeader__menu__item">
+      <!-- <div class="navHeader__menu__item">
         <el-dropdown trigger="click" title="设置" @command="setSize" class="img-icon">
           <span>
             <svg-icon icon="setting" size="20px"></svg-icon>
@@ -28,10 +28,20 @@
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-      </div>
+      </div> -->
       <div class="navHeader__menu__item w100">
-        <el-select v-model="LayoutStore().language">
-          <el-option v-for="item in messages" :key="item.id" :label="item.name" :value="item.id"></el-option>
+        <el-select
+          v-model="LayoutStore().language"
+          placeholder="语言"
+          class="w100"
+          @change="LayoutStore().setLanguage($event)"
+        >
+          <el-option
+            v-for="item in languageOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </div>
       <!-- 个人功能菜单 -->
@@ -95,6 +105,14 @@ const matched = computed(() => {
   return route.matched.filter((item: any) => {
     return item.path !== "/"
   })
+})
+
+// 语言
+const languageOptions = Object.entries(messages).map((item, index) => {
+  return {
+    value: item[1].value,
+    label: item[1].label,
+  }
 })
 
 // 修改个人信息

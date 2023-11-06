@@ -29,7 +29,7 @@
 
 .wscn-http404 {
   position: relative;
-  width: 1200px;
+  width: 900px;
   padding: 0 50px;
   overflow: hidden;
 
@@ -235,6 +235,15 @@
         transform: translateY(0);
         opacity: 1;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .wscn-http404 {
+    width: auto;
+    .pic-404 {
+      display: none;
     }
   }
 }

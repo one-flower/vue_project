@@ -1,12 +1,17 @@
-const handleTree = (
-  list: any[],
-  idStr: string = "id",
-  pidStr: string = "pid",
-  childrenStr: string = "children",
-): any[] => {
-  const id: string = idStr.trim()
-  const pid: string = pidStr.trim()
-  const children: string = childrenStr.trim()
+interface OptionTree {
+  id?: string
+  pid?: string
+  children?: string
+}
+/**
+ * @desc 递归父子关系数数组
+ * @param { any[] } list 数据源
+ * @param { OptionTree } optionTree 配置项 id pid children
+ * @returns { Array } any[]
+ */
+const handleTree = (list: any[], optionTree: OptionTree = {}): any[] => {
+  const { id = "id", pid = "pid", children = "children" } = optionTree
+
   const endList: any[] = []
   const obj: any = {}
   const startList: any[] = []

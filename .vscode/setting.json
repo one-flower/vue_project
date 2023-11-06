@@ -27,7 +27,12 @@
         "javascript",
         "javascriptreact",
         "html",
-        "vue"
+        "vue",
+        "typescript",
+        "typescriptreact",
+        "json",
+        "jsonc",
+        "markdown"
     ],
     "[vue]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"

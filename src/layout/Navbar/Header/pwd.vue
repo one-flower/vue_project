@@ -19,6 +19,7 @@
       </el-input>
     </el-form-item>
   </el-form>
+
   <div style="text-align: center">
     <el-button type="primary" @click="confirm(pwdRef)">确定</el-button>
     <el-button @click="cancel">取消</el-button>

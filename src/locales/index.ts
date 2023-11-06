@@ -17,9 +17,9 @@ export const messages = {
   },
 }
 // 创建 i18n
-export default createI18n({
+export const i18n = createI18n({
   legacy: false,
   globalInjection: true, // 全局模式，可以直接使用 $t
-  // locale: "zhCn",
+  locale: localStorage.getItem("language") || import.meta.env.VITE_LANGUAGE,
   messages: messages,
 })

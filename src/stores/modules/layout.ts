@@ -1,4 +1,3 @@
-import { Language } from "element-plus/es/locale"
 import { defineStore } from "pinia"
 interface LayoutStore {
   elSize: "" | "large" | "default" | "small"
@@ -11,7 +10,7 @@ const Layout = defineStore({
   state: (): LayoutStore => ({
     elSize: "default",
     silderStatus: false,
-    language: "zhCn",
+    language: localStorage.getItem("language") || import.meta.env.VITE_LANGUAGE,
   }),
   getters: {},
   actions: {
@@ -23,12 +22,10 @@ const Layout = defineStore({
     changeAsideStatus() {
       this.silderStatus = !this.silderStatus
     },
-    // 语言
     setLanguage(e: string) {
       this.language = e
-    },
-    getLanguage() {
-      return this.language
+      localStorage.setItem("language", e)
+      location.reload()
     },
   },
   persist: {

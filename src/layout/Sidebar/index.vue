@@ -13,7 +13,7 @@
         :collapse-transition="false"
         :default-active="route.fullPath"
       >
-        <template v-for="item in storeRoutes" :key="item.menuId">
+        <template v-for="item in UserStore().menuList" :key="item.menuId">
           <!-- 多级菜单 -->
           <el-sub-menu :index="item.path" v-if="item.children && !item.redirect">
             <template #title>
@@ -40,7 +40,7 @@
 <script setup lang="ts">
 import variables from "@/styles/variables.module.scss"
 
-import { LayoutStore } from "@/stores"
+import { LayoutStore, UserStore } from "@/stores"
 import Logo from "./logo.vue"
 import { storeRoutes } from "@router/storeMenu"
 

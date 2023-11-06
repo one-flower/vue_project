@@ -1,6 +1,6 @@
 export default {
-  id: "zhCn",
-  name: "中文",
+  value: "zhCn",
+  label: "中文",
   buttons: {
     login: "登录",
   },

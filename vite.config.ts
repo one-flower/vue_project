@@ -11,8 +11,6 @@ import { viteMockServe } from "vite-plugin-mock"
 import viteVueDevtools from "vite-plugin-vue-devtools"
 // import { visualizer } from "rollup-plugin-visualizer"; //build文件分析视图
 // https://vitejs.dev/config/
-const pathSrc = path.resolve(__dirname, "src")
-console.log(pathSrc, "==")
 
 export default defineConfig(({ mode }: ConfigEnv) => {
   const env = loadEnv(mode, process.cwd(), "")

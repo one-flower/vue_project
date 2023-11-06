@@ -6,12 +6,11 @@
 
 <script lang="ts" setup>
 import { LayoutStore } from "@/stores"
-import { messages } from "./locales"
-console.log(messages)
+import { messages, i18 } from "@/locales"
 
 // const { LayoutStore } = appStore()
 const local = computed(() => {
-  // @ts-ignore
   return messages[LayoutStore().language]
+  // @ts-ignore
 })
 </script>
