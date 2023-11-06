@@ -3,8 +3,15 @@ export default {
   label: "english",
   buttons: {
     login: "Login",
+    search: "Search",
   },
-  menus: {
-    home: "Home",
+  forms: {
+    name: "name",
+    barcode: "barcode",
+    category: "category",
+  },
+  tips: {
+    success: "success",
+    error: "error",
   },
 }

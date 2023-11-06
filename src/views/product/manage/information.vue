@@ -1,22 +1,19 @@
 <template>
   <div class="container">
-    <div>
-      {{ $t("menus.home") }}
-    </div>
-    <el-form :model="searchObj" ref="searchRef" label-width="60px" label-position="left">
+    <el-form :model="searchObj" ref="searchRef" label-width="70px" label-position="left">
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-form-item label="商品名" prop="name">
+          <el-form-item :label="$t('forms.name')" prop="name">
             <el-input v-model="searchObj.name" placeholder="" clearable></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="条码" prop="barcode">
+          <el-form-item :label="$t('forms.barcode')" prop="barcode">
             <el-input v-model="searchObj.barcode" placeholder="" clearable></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="分类" prop="category">
+          <el-form-item :label="$t('forms.category')" prop="category">
             <el-select v-model="searchObj.category" value-key="" placeholder="" clearable>
               <el-option
                 v-for="item in dictList.options"
@@ -29,7 +26,7 @@
         </el-col>
         <el-col :span="6">
           <el-form-item>
-            <el-button type="primary" @click="onSearch">查询</el-button>
+            <el-button type="primary" @click="onSearch">{{ $t("buttons.search") }}</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -46,6 +43,9 @@
 <script setup lang="ts">
 import { toast } from "@/utils/tips"
 import { FormInstance } from "element-plus"
+import { i18n } from "@/locales"
+
+const { t } = i18n.global
 
 const dictList = {
   options: [
@@ -63,7 +63,7 @@ const searchObj = reactive({
 })
 
 const onSearch = () => {
-  toast.success("sss")
+  toast.success(t("tips.success"))
 }
 
 const tableData = reactive<TablePage>({
