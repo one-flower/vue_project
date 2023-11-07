@@ -28,6 +28,7 @@ class Toast {
     return Toast.show(msg, "info")
   }
 }
+
 /**
  * @desc el提示
  * @param {string} msg 提示信息

@@ -3,7 +3,7 @@
     <Sidebar class="sidebar-container" />
     <main class="main-container">
       <Navbar class="navbar-container" />
-      <AppMain class="appmain-container" />
+      <AppMain class="appmain-container" id="appmain-container" />
     </main>
   </div>
 </template>

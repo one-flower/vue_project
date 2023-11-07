@@ -5,22 +5,24 @@ import myLoad from "./loading.vue"
 const show = ref(false)
 const tip = ref("加载中...")
 const vm = createVNode(myLoad, { show: show, tip: tip })
+
 render(vm, document.createElement("div"))
 
-const targetNode = ref<Element>(document.body)
 const load = {
   /**
    * @desc 打开loading
    * @param title 提示内容
    * @param target loading容器，默认body
    */
-  open(title: any = "加载中", target: Element = targetNode.value) {
+  open(title: any = "加载中", flag: boolean = true) {
+    let targetNode: Element = document.querySelector(".appmain-container") || document.body
+    if (!flag) targetNode = document.body
     show.value = true
     tip.value = title
     if (!vm || !vm.el) {
       return
     }
-    target.appendChild(vm.el as Element)
+    targetNode.appendChild(vm.el as Element)
   },
   close(s: number = 1) {
     setTimeout(() => {
@@ -28,9 +30,6 @@ const load = {
         vm.el.parentNode.removeChild(vm.el)
       }
     }, s * 1000)
-  },
-  setTarget(target: Element) {
-    targetNode.value = target || document.body
   },
 }
 export default load
