@@ -9,6 +9,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/login",
     name: "login",
+    menuId: 1,
     meta: {
       title: "登录",
       icon: "vue",

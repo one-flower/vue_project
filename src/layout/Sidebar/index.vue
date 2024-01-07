@@ -13,12 +13,12 @@
         :collapse-transition="false"
         :default-active="route.fullPath"
       >
-        <template v-for="item in UserStore().menuList" :key="item.menuId">
+        <template v-for="item in menu" :key="item.menuId">
           <!-- 多级菜单 -->
           <el-sub-menu :index="item.path" v-if="item.children && !item.redirect">
             <template #title>
               <el-icon>
-                <svg-icon size="18px" :icon="item.meta?.icon as string" />
+                <svg-icon size="18px" :icon="item.meta?.icon" />
               </el-icon>
               <span>{{ item.meta?.title }}</span>
             </template>
@@ -38,15 +38,16 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute, useRouter } from "vue-router"
 import variables from "@/styles/variables.module.scss"
-
-import { LayoutStore, UserStore } from "@/stores"
+import { LayoutStore } from "@/stores"
 import Logo from "./logo.vue"
-import { storeRoutes } from "@router/storeMenu"
-
 import MenuItem from "./menu-item.vue"
 
 const route = useRoute()
+const menu = useRouter().getRoutes()
+
+console.log(menu)
 </script>
 
 <style lang="scss" scoped>

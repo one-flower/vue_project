@@ -7,7 +7,6 @@
         '--size': `${size}`,
       }"
       class="svg-icon"
-      :class="className"
       :src="icon"
     />
     <!-- '--svg-icon-url': `url(${icon})`,  svg-icon-online -->
@@ -18,7 +17,6 @@
       :style="{
         '--size': `${size}`,
       }"
-      :class="className"
       aria-hidden="true"
     >
       <use :xlink:href="`#${icon}`" />
@@ -27,22 +25,13 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
-  // SVG 图标名称或在线URL
-  icon: {
-    type: String,
-    default: "vue",
-    // required: true
-  },
-  // 图标类名
-  className: {
-    type: String,
-    default: "",
-  },
-  size: {
-    type: String,
-    default: "1rem",
-  },
+interface Props {
+  icon: string // SVG 图标名称或在线URL
+  size?: string // 尺寸
+}
+const props = withDefaults(defineProps<Props>(), {
+  icon: "vue",
+  size: "1rem",
 })
 
 const isOnlineSvg = computed(() => /^(https?:)/.test(props.icon))

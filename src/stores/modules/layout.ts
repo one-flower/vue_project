@@ -1,8 +1,9 @@
 import { defineStore } from "pinia"
+import type {Languange} from '@/locales';
 interface LayoutStore {
   elSize: "" | "large" | "default" | "small"
   silderStatus: boolean
-  language: string
+  language: Languange
 }
 
 const Layout = defineStore({
@@ -22,7 +23,7 @@ const Layout = defineStore({
     changeAsideStatus() {
       this.silderStatus = !this.silderStatus
     },
-    setLanguage(e: string) {
+    setLanguage(e: Languange) {
       this.language = e
       localStorage.setItem("language", e)
       location.reload()

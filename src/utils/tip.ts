@@ -39,7 +39,7 @@ class Toast {
  */
 export const toast = new Toast()
 
-interface BoxOption {
+type BoxOption = {
   title?: string
   type?: msgType
   confirmText?: string

@@ -9,7 +9,7 @@ export function setupStore(app: App<Element>) {
 }
 
 // modules 统一管理
-import UserStore from "./modules/user"
 import LayoutStore from "./modules/layout"
+import UserStore from "./modules/user"
 
 export { UserStore, LayoutStore }

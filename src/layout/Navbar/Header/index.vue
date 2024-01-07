@@ -15,7 +15,7 @@
       </el-breadcrumb>
     </div>
     <div class="navHeader__menu">
-      <!-- <div class="navHeader__menu__item">
+      <div class="navHeader__menu__item">
         <el-dropdown trigger="click" title="设置" @command="setSize" class="img-icon">
           <span>
             <svg-icon icon="setting" size="20px"></svg-icon>
@@ -28,20 +28,10 @@
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-      </div> -->
+      </div>
       <div class="navHeader__menu__item w100">
-        <el-select
-          v-model="LayoutStore().language"
-          placeholder="语言"
-          class="w100"
-          @change="LayoutStore().setLanguage($event)"
-        >
-          <el-option
-            v-for="item in languageOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
+        <el-select v-model="LayoutStore().language" @change="LayoutStore().setLanguage">
+          <el-option v-for="item in messages" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </div>
       <!-- 个人功能菜单 -->
@@ -54,32 +44,21 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="changeInfo">个人信息</el-dropdown-item>
-            <el-dropdown-item @click="changePwd">修改密码</el-dropdown-item>
-            <el-dropdown-item @click="loginOut">退出登录</el-dropdown-item>
+            <el-dropdown-item @click="">占位1</el-dropdown-item>
+            <el-dropdown-item @click="">占位1</el-dropdown-item>
+            <el-dropdown-item @click="loginOut">{{ $t("value") }}</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </div>
   </div>
-
-  <!-- 修改密码 -->
-  <el-dialog v-model="infoShow" title="个人信息" width="600px" destroy-on-close>
-    <info-item @cancel="drwCancel"></info-item>
-  </el-dialog>
-
-  <!-- 修改密码 -->
-  <el-dialog v-model="pwdShow" title="修改密码" width="500px" destroy-on-close>
-    <pwd-item @cancel="drwCancel"></pwd-item>
-  </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { messages } from "@/locales"
 import { UserStore, LayoutStore } from "@/stores"
-import InfoItem from "./info.vue"
-import PwdItem from "./pwd.vue"
-// import NoteTip from './note-tip.vue';
+
+console.log(messages, localStorage.getItem("language"))
 const route = useRoute()
 // 控制aside
 const changeSider = () => {
@@ -106,29 +85,6 @@ const matched = computed(() => {
     return item.path !== "/"
   })
 })
-
-// 语言
-const languageOptions = Object.entries(messages).map((item, index) => {
-  return {
-    value: item[1].value,
-    label: item[1].label,
-  }
-})
-
-// 修改个人信息
-const infoShow = ref<boolean>(false)
-const changeInfo = () => {
-  infoShow.value = true
-}
-// 修改密码
-const pwdShow = ref<boolean>(false)
-const changePwd = () => {
-  pwdShow.value = true
-}
-const drwCancel = () => {
-  infoShow.value = false
-  pwdShow.value = false
-}
 </script>
 
 <style scoped lang="scss">

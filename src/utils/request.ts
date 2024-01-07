@@ -1,6 +1,6 @@
 import axios from "axios"
 import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from "axios"
-import { UserStore, LayoutStore } from "@/stores"
+import { LayoutStore } from "@/stores"
 import load from "@/components/Loading/index"
 import { toast } from "./tip"
 
@@ -47,9 +47,9 @@ function removePendingRequest(config: InternalAxiosRequestConfig) {
 request.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // 添加请求信息 token
-    if (UserStore().token) {
-      config.headers.token = UserStore().getToken
-    }
+    // if (UserStore().token) {
+    //   config.headers.token = UserStore().getToken
+    // }
     // 判断FormData 类型
     if (Object.prototype.toString.call(config.data) === "[object FormData]") {
       config.headers["Content-Type"] = "multipart/form-data"
@@ -116,13 +116,13 @@ request.interceptors.response.use(
       return Promise.reject(data.message)
     } else if (data.code === 401) {
       toast.error(data.message)
-      UserStore()
-        .logout()
-        .then(() => {
-          // 重置pinia
-          LayoutStore().$reset()
-        })
-        .catch(() => {})
+      // UserStore()
+      //   .logout()
+      //   .then(() => {
+      //     // 重置pinia
+      //     LayoutStore().$reset()
+      //   })
+      //   .catch(() => {})
       return Promise.reject(data.message)
     } else {
       toast.error(data.message)

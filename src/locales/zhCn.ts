@@ -1,5 +1,5 @@
 export default {
-  value: "zhCn",
+  value: "zh-cn",
   label: "中文",
   buttons: {
     login: "登录",

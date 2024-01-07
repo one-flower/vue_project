@@ -87,8 +87,8 @@
 <script setup lang="ts">
 import type { FormRules, FormInstance } from "element-plus/es"
 import { vPwd } from "@/utils/verify"
+import { toast } from "@/utils/tip"
 import { UserStore } from "@/stores"
-import { toast } from "@/utils/tip.js"
 
 const loading = ref(false)
 let pwdType = ref("password")
@@ -173,6 +173,23 @@ const otherLogin = () => {
 
 <style lang="scss" scoped>
 $mWidth: 500px;
+
+h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+h3,
+h4 {
+  margin: 0.5rem 0;
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #005980;
+}
 
 .login-container {
   width: 100%;

@@ -6,11 +6,9 @@
 
 <script lang="ts" setup>
 import { LayoutStore } from "@/stores"
-import { messages, i18 } from "@/locales"
+import { messages } from "@/locales"
 
-// const { LayoutStore } = appStore()
 const local = computed(() => {
   return messages[LayoutStore().language]
-  // @ts-ignore
 })
 </script>

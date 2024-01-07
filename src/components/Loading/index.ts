@@ -20,16 +20,16 @@ const load = {
     show.value = true
     tip.value = title
     if (!vm || !vm.el) {
-      return
+      return;
     }
     targetNode.appendChild(vm.el as Element)
   },
   close(s: number = 1) {
     setTimeout(() => {
       if (vm?.el && vm.el.parentNode) {
-        vm.el.parentNode.removeChild(vm.el)
+        vm.el.parentNode.removeChild(vm.el);
       }
-    }, s * 1000)
+    }, s * 1000);
   },
 }
 export default load

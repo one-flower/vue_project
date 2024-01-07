@@ -4,7 +4,7 @@ import { menuQuery } from "@/api/sys/menu"
 import Layout from "@/layout/index.vue"
 import { handleTree } from "@/utils"
 
-interface loginForm {
+type loginForm = {
   username: string
   password: string
   // code: string

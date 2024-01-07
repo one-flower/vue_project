@@ -3,7 +3,7 @@
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <!-- <keep-alive>    -->
-        <component :is="Component" :key="route.path" />
+        <component :is="Component" :key="route.fullPath" />
         <!-- </keep-alive> -->
       </transition>
     </router-view>
@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { LayoutStore } from "@/stores"
-
+import { RouteRecordRaw, useRoute } from "vue-router"
 const route = useRoute()
 
+console.log(route, "router")
 // cachedViews
 /* keep-alive
  * include 匹配的组件会被缓存

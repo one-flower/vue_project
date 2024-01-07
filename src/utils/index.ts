@@ -1,4 +1,4 @@
-interface OptionTree {
+type OptionTree = {
   id?: string
   pid?: string
   children?: string

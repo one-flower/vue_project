@@ -17,7 +17,7 @@ const app = createApp(App)
 app.use(router).use(i18n)
 
 // 注册pinia
-setupStore(app)
+setupStore(app);
 // 自定义指令
 // setupGlobDirectives(app)
 // 打印错误

@@ -7,7 +7,7 @@ import zhCn from "./zhCn"
 import en from "./en"
 
 export const messages = {
-  zhCn: {
+  "zh-cn": {
     ...zhCnLocal,
     ...zhCn,
   },
@@ -16,6 +16,8 @@ export const messages = {
     ...en,
   },
 }
+type Languange = "zh-cn" | "en"
+export type { Languange }
 // 创建 i18n
 export const i18n = createI18n({
   legacy: false,

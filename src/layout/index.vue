@@ -29,12 +29,6 @@ const getTabsize = () => {
     LayoutStore().silderStatus = false
   }
 }
-
-window.addEventListener("resize", getTabsize)
-
-onUnmounted(() => {
-  window.addEventListener("resize", getTabsize)
-})
 </script>
 <style scoped lang="scss">
 .app-wrapper {

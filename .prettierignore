@@ -4,5 +4,5 @@ coverage
 dist
 
 # 忽略所有 html 文件
-*.html
-*.d.ts
+# *.html
+# *.d.ts
