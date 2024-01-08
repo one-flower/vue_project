@@ -9,6 +9,7 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
 import { viteMockServe } from "vite-plugin-mock"
 import viteVueDevtools from "vite-plugin-vue-devtools"
+import { prismjsPlugin } from "vite-plugin-prismjs"
 // import { visualizer } from "rollup-plugin-visualizer"; //build文件分析视图
 // https://vitejs.dev/config/
 
@@ -76,6 +77,12 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       vue({
         // 默认开启响应性语法糖
         reactivityTransform: true,
+      }),
+      prismjsPlugin({
+        languages: ["json", "js"], //  languages: 'all',
+        plugins: ["line-numbers", "show-language", "copy-to-clipboard", "inline-color"],
+        theme: "solarizedlight", //主题名称
+        css: true,
       }),
       viteVueDevtools(), // vue开发工具
       createSvgIconsPlugin({

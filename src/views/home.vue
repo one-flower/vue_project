@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1 id="comp" style="text-align: center">组件说明</h1>
+
     <h2 id="input">Input</h2>
     <div class="example">
       <div class="example__view">
@@ -13,6 +14,8 @@
               clearable
               :type="item.option.type || 'text'"
               :rows="4"
+              :formatter="toFunc(item.option.formatter)"
+              :parser="toFunc(item.option.parser)"
             >
               <template #prepend v-if="item.option.prepend">{{ item.option.prepend }}</template>
               <template #append v-if="item.option.append">{{ item.option.append }}</template>
@@ -20,14 +23,15 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="example__code" :class="{ boxExpand: inputForm.expandFlag }">
-        <code>
-          {{ inputList }}
-        </code>
-      </div>
+
+      <pre
+        class="example__code"
+        :class="{ boxExpand: inputExpandFlag }"
+      ><code class="language-js inline-color">{{ inputList }}</code></pre>
+
       <div class="example--btn">
-        <button @click="inputForm.expandFlag = !inputForm.expandFlag">
-          {{ inputForm.expandFlag ? "展开" : "收缩" }}
+        <button @click="inputExpandFlag = !inputExpandFlag">
+          {{ !inputExpandFlag ? "展开" : "收缩" }}
         </button>
       </div>
     </div>
@@ -59,18 +63,23 @@
           </el-form-item>
         </el-form>
       </div>
-
-      <div class="example__code" :class="{ boxExpand: !inputNumberForm.expandFlag }">
-        <code>
-          {{ inputList }}
-        </code>
-      </div>
+      <pre
+        class="example__code"
+        :class="{ boxExpand: inputNumberExpandFlag }"
+      ><code class="language-js">{{ inputNumberList }}</code></pre>
       <div class="example--btn">
-        <button @click="inputNumberForm.expandFlag = !inputNumberForm.expandFlag">
-          {{ !inputNumberForm.expandFlag ? "展开" : "收缩" }}
+        <button @click="inputNumberExpandFlag = !inputNumberExpandFlag">
+          {{ !inputNumberExpandFlag ? "展开" : "收缩" }}
         </button>
       </div>
     </div>
+    <h2 id="input">Api</h2>
+    <el-table :data="inputNumberApiData">
+      <el-table-column prop="name" label="属性"></el-table-column>
+      <el-table-column prop="desc" label="说明"></el-table-column>
+      <el-table-column prop="type" label="类型"></el-table-column>
+      <el-table-column prop="default" label="默认值"></el-table-column>
+    </el-table>
 
     <h2 id="select">Select</h2>
     <el-text class="mx-1" size="large" type="warning">api为动态数据，静态使用dict，下面使用dict展示</el-text>
@@ -79,42 +88,72 @@
         <el-form :model="selectForm" ref="form" :inline="false">
           <el-form-item :label="item.label" v-for="item in selectList" :rules="item.rules">
             <el-select
-              v-model.number="selectForm[item.value as string]"
+              v-model="selectForm[item.value as string]"
               :placeholder="item.option.placeholder"
               :disabled="item.option.disabled"
               clearable
+              :multiple="item.option.multiple"
+              :collapse-tags="item.option.collapseTags"
+              :collapse-tags-tooltip="item.option.collapseTagsTooltip"
+              :max-collapse-tags="item.option.maxCollapseTags"
+              :filterable="item.option.filterKeys?.length ? true : false"
+              :filter-method="item.option.filterKeys?.length ? filterMethod : undefined"
             >
+              <template #header v-if="item.option.addUrl">
+                <el-input v-model="selectAddValue" clearable>
+                  <template #append>
+                    <el-button type="primary" size="default" @click="addItem">添加</el-button>
+                  </template>
+                </el-input>
+              </template>
               <el-option
                 v-for="optionItem in item.option.dict"
                 :key="optionItem.value"
                 :label="optionItem.label"
                 :value="optionItem.value"
-              />
+                :disabled="optionItem.disabled"
+              >
+                <slot v-if="optionItem.slot">
+                  <div v-html="optionItem.slot"></div>
+                </slot>
+              </el-option>
             </el-select>
           </el-form-item>
         </el-form>
       </div>
-
-      <div class="example__code" :class="{ boxExpand: !selectForm.expandFlag }">
-        <code>
-          {{ inputList }}
-        </code>
-      </div>
+      <pre
+        class="example__code"
+        :class="{ boxExpand: selectExpandFlag }"
+      ><code class="language-js">{{ selectList }}</code></pre>
       <div class="example--btn">
-        <button @click="selectForm.expandFlag = !selectForm.expandFlag">
-          {{ !selectForm.expandFlag ? "展开" : "收缩" }}
+        <button @click="selectExpandFlag = !selectExpandFlag">
+          {{ !selectExpandFlag ? "展开" : "收缩" }}
         </button>
       </div>
     </div>
+    <h2 id="input">Api</h2>
+    <el-table :data="selectApiData">
+      <el-table-column prop="name" label="属性"></el-table-column>
+      <el-table-column prop="desc" label="说明"></el-table-column>
+      <el-table-column prop="type" label="类型"></el-table-column>
+      <el-table-column prop="default" label="默认值"></el-table-column>
+    </el-table>
   </div>
 </template>
 <script setup lang="ts">
+import Prism from "prismjs"
+
+onMounted(() => {
+  Prism.highlightAll() //切换菜单重新渲染
+})
 // Prism.js
+const inputExpandFlag = ref(true)
 const inputForm = reactive<Record<string, any>>({
-  expandFlag: true,
   inputValue1: "",
   inputValue2: "禁用value",
   inputValue3: "",
+  inputValue4: "",
+  inputValue5: "",
 })
 const inputList = [
   {
@@ -144,7 +183,7 @@ const inputList = [
   },
   {
     label: "自定义文本",
-    value: "inputValue",
+    value: "inputValue3",
     type: "input",
     defaultValue: "",
     rules: {
@@ -152,13 +191,13 @@ const inputList = [
     },
     option: {
       placeholder: "请输入内容",
-      formatter: "$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')",
-      parser: "value.replace(/\$\s?|(,*)/g, '')",
+      formatter: "`$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')",
+      parser: "value.replace(/\\$\\s?|(,*)/g, '')",
     },
   },
   {
     label: "文本域",
-    value: "inputValue",
+    value: "inputValue4",
     type: "input",
     defaultValue: "",
     rules: {
@@ -171,7 +210,7 @@ const inputList = [
   },
   {
     label: "前后置内容",
-    value: "inputValue",
+    value: "inputValue5",
     type: "input",
     defaultValue: "",
     rules: {
@@ -185,7 +224,7 @@ const inputList = [
   },
 ]
 const inputApiData = [
-  { name: "disable", desc: "禁用", type: "boolean", default: "false" },
+  { name: "disabled", desc: "禁用", type: "boolean", default: "false" },
   { name: "placeholder", desc: "占位符", type: "string", default: "" },
   { name: "formatter", desc: `指定输入值的格式。(只有当 type 是"text时才能工作)`, type: "string", default: "" },
   { name: "parser", desc: `指定从格式化器输入中提取的值。(仅当 type 是"text"时才起作用)`, type: "string", default: "" },
@@ -194,9 +233,12 @@ const inputApiData = [
   { name: "prepend", desc: "输入框前置内容", type: "string", default: "" },
   { name: "append", desc: "输入框后置内容", type: "string", default: "" },
 ]
+const toFunc = (string: string | undefined) => {
+  if (string) return new Function("value", `return ${string}`)
+}
 
+const inputNumberExpandFlag = ref(false)
 const inputNumberForm = reactive<Record<string, any>>({
-  expandFlag: false,
   inputNumberValue1: 1,
   inputNumberValue2: 10,
   inputNumberValue3: 5,
@@ -292,19 +334,34 @@ const inputNumberList = [
     },
   },
 ]
+const inputNumberApiData = [
+  { name: "disabled", desc: "禁用", type: "boolean", default: "false" },
+  { name: "placeholder", desc: "占位符", type: "string", default: "" },
+  { name: "min", desc: "最小值", type: "number", default: "" },
+  { name: "max", desc: "最大值", type: "number", default: "" },
+  { name: "step", desc: "步长", type: "number", default: "" },
+  { name: "stepStrictly", desc: "严格步长", type: "boolean", default: "false" },
+  { name: "precision", desc: "数值精度", type: "string", default: "" },
+  { name: "controls", desc: "是否显示控制按钮", type: "boolean", default: "true" },
+  { name: "controlsPosition", desc: "控制按钮位置", type: `"" , "right"`, default: "-" },
+]
 
+const selectExpandFlag = ref(false)
 const selectForm = reactive<Record<string, any>>({
-  expandFlag: false,
   selectValue1: "",
-  selectValue2: "禁用value",
-  selectValue3: "",
+  selectValue2: 1,
+  selectValue3: [1, 3],
+  selectValue4: [1, 2],
+  selectValue5: "",
+  selectValue6: "",
 })
-const selectList = [
+
+const selectList = reactive([
   {
     label: "基础",
     value: "selectValue1",
     type: "select",
-    defaultValue: 1,
+    defaultValue: "",
     rules: {
       required: true,
     },
@@ -312,101 +369,228 @@ const selectList = [
       // 1231
       dict: [
         {
-          value: "Option1",
-          label: "Option1",
+          value: 1,
+          label: "北京",
         },
         {
-          value: "Option2",
-          label: "Option2",
+          value: 2,
+          label: "上海",
+          disabled: true,
         },
         {
-          value: "Option3",
-          label: "Option3",
+          value: 3,
+          label: "深圳",
+          slot: `<span style="color:red">深圳</span>`,
         },
         {
-          value: "Option4",
-          label: "Option4",
+          value: 4,
+          label: "广州",
         },
       ],
     },
   },
   {
     label: "禁用",
-    value: "inputNumberValue2",
-    type: "inputNumber",
-    defaultValue: 10,
+    value: "selectValue2",
+    type: "select",
+    defaultValue: 1,
     rules: {
       required: true,
     },
     option: {
       disabled: true,
       placeholder: "请输入内容",
+      dict: [
+        {
+          value: 1,
+          label: "北京",
+        },
+        {
+          value: 2,
+          label: "上海",
+        },
+        {
+          value: 3,
+          label: "深圳",
+        },
+        {
+          value: 4,
+          label: "广州",
+        },
+      ],
     },
   },
   {
-    label: "设置大小",
-    value: "inputNumberValue3",
-    type: "inputNumber",
-    defaultValue: 5,
+    label: "多选",
+    value: "selectValue3",
+    type: "select",
+    defaultValue: [1, 3],
     rules: {
       required: true,
     },
     option: {
-      min: 0,
-      max: 10,
+      multiple: true,
+      dict: [
+        {
+          value: 1,
+          label: "北京",
+        },
+        {
+          value: 2,
+          label: "上海",
+        },
+        {
+          value: 3,
+          label: "深圳",
+        },
+        {
+          value: 4,
+          label: "广州",
+        },
+      ],
     },
   },
   {
-    label: "精度",
-    value: "inputNumberValue4",
-    type: "inputNumber",
-    defaultValue: 5.1,
+    label: "多选折叠",
+    value: "selectValue4",
+    type: "select",
+    defaultValue: [1, 2],
     rules: {
       required: true,
     },
     option: {
-      precision: 1,
+      dict: [
+        {
+          value: 1,
+          label: "北京",
+        },
+        {
+          value: 2,
+          label: "上海",
+        },
+        {
+          value: 3,
+          label: "深圳",
+        },
+        {
+          value: 4,
+          label: "广州",
+        },
+      ],
+      multiple: true,
+      collapseTags: true,
+      collapseTagsTooltip: true,
+      maxCollapseTags: 2,
     },
   },
   {
-    label: "步长",
-    value: "inputNumberValue5",
-    type: "inputNumber",
-    defaultValue: 5.21,
+    label: "自定义筛选",
+    value: "selectValue5",
+    type: "select",
+    defaultValue: "",
     rules: {
       required: true,
     },
     option: {
-      step: 0.01,
-      stepStrictly: true,
+      dict: [
+        {
+          value: 1,
+          label: "北京",
+          name: "beijing",
+        },
+        {
+          value: 2,
+          label: "上海",
+          name: "shanghai",
+        },
+        {
+          value: 3,
+          label: "深圳",
+          name: "shenzhen",
+        },
+        {
+          value: 4,
+          label: "广州",
+          name: "guangzhou",
+        },
+      ],
+      filterKeys: ["name"],
     },
   },
   {
-    label: "控制按钮",
-    value: "inputNumberValue6",
-    type: "inputNumber",
-    defaultValue: 1,
+    label: "添加选项（效果未验证）",
+    value: "selectValue6",
+    type: "select",
+    defaultValue: "",
     rules: {
       required: true,
     },
     option: {
-      controls: false,
+      addUrl: "api/xxx",
+      dict: [
+        {
+          value: 1,
+          label: "北京",
+        },
+        {
+          value: 2,
+          label: "上海",
+        },
+        {
+          value: 3,
+          label: "深圳",
+        },
+        {
+          value: 4,
+          label: "广州",
+        },
+      ],
     },
   },
-  {
-    label: "按钮位置",
-    value: "inputNumberValue7",
-    type: "inputNumber",
-    defaultValue: 1,
-    rules: {
-      required: true,
-    },
-    option: {
-      controlsPosition: "right",
-    },
-  },
+])
+const dictCopy = selectList[4].option.dict
+const filterMethod = (value: string | undefined) => {
+  // 自定义过滤方法
+  if (!value) {
+    selectList[4].option.dict = dictCopy
+    return
+  } else {
+    selectList[4].option.dict = selectList[4].option.dict?.filter((item: any) => {
+      let num = 0
+      let delFlag = true // 过滤掉不符合的
+      selectList[4].option.filterKeys?.forEach(key => {
+        // number  string
+        if (["number", "string"].includes(typeof item[key])) {
+          if (item[key]!.toString().indexOf(value) > -1) {
+            num++
+          }
+        }
+
+        if (num > 0) {
+          delFlag = false
+        }
+      })
+
+      return !delFlag
+    })
+  }
+}
+const selectAddValue = ref("")
+const addItem = () => {
+  selectList[5].option.dict.push({ value: selectList[5].option.dict.length + 1, label: selectAddValue.value } as any)
+}
+const selectApiData = [
+  { name: "disabled", desc: "禁用", type: "boolean", default: "false" },
+  { name: "placeholder", desc: "占位符", type: "string", default: "" },
+  { name: "multiple", desc: "多选", type: "number", default: "false" },
+  { name: "collapseTags", desc: "多选时是否将选中值按文字的形式展示", type: "boolean", default: "false" },
+  { name: "collapseTagsTooltip", desc: "多选时是否显示选中值的TOOLTIP提示", type: "boolean", default: "false" },
+  { name: "maxCollapseTags", desc: "多选时最多显示多少个tag", type: "number", default: "" },
+  { name: "api", desc: "动态选项接口", type: "string", default: "" },
+  { name: "dict", desc: "静态选项", type: "object", default: "" },
+  { name: "filterKeys", desc: "是否显示控制按钮", type: "array", default: "true" },
+  { name: "addUrl", desc: "动态添加字段接口", type: "string", default: "" },
 ]
-const toFunc = (string: string) => {}
 </script>
 <style lang="scss" scoped>
 .example {
@@ -420,9 +604,13 @@ const toFunc = (string: string) => {}
   }
   &__code {
     background-color: #f5f7fa;
-    transition: max-height 0.5s ease-in-out;
+
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: 0.8s;
     overflow: hidden;
-    max-height: 100vh;
+    margin: 0;
+    padding: 0 10px;
   }
   &--btn {
     z-index: 10;
@@ -447,22 +635,13 @@ const toFunc = (string: string) => {}
   }
 }
 .boxExpand {
-  max-height: 0;
-  padding: 0;
+  grid-template-rows: 1fr;
 }
 code {
-  display: block;
-  padding: 20px 10px;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  tab-size: 4;
-  hyphens: none;
+  min-height: 0;
+}
 
-  font-family: "JetBrains Mono", source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-  color: #303133;
-  font-size: 14px;
+h2 {
+  color: #409eff;
 }
 </style>
